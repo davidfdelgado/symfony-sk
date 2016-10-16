@@ -55,8 +55,6 @@ class SCIndexController extends Controller
 
         }
 
-        dump($vorgang);
-
         $seiteninfo = array();
         $seiteninfo['hide'] = true;
 
@@ -130,7 +128,6 @@ class SCIndexController extends Controller
         
         $historie = $em->getRepository('AppBundle\Entity\AgenturUser')->findScanHistorie($user);
 
-        
         return $this->render('@AppBundle/Scan/historie-scan.html.twig', array('seiteninfo' => array('title' => ' ', 'subtitle' => ' '), 'historie' => $historie));
 
     }
