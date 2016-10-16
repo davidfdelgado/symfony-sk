@@ -1,0 +1,135 @@
+AppBundle\Entity\Artikel:
+    type: entity
+    table: ARTIKEL
+    uniqueConstraints:
+        artikelnummer:
+            columns:
+                - a_artikelnummer
+                - a_kid
+                - a_art
+    id:
+        aId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: a_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        aAktiv:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: a_aktiv
+        aTyp:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: a_typ
+        aRabattAktiv:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: a_rabatt_aktiv
+        aKid:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: a_kid
+        aArtikelnummer:
+            type: string
+            nullable: true
+            length: 30
+            options:
+                fixed: false
+            column: a_artikelnummer
+        aArt:
+            type: boolean
+            nullable: false
+            options:
+                comment: '0 = Office, 1 = Warenkorb, 2 = Hotels, 3 = Anfrage'
+            column: a_art
+        aName:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+            column: a_name
+        aNameEn:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+            column: a_name_en
+        aPreis:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            options:
+                default: '0.00'
+            column: a_preis
+        aPreisorig:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            options:
+                default: '0.00'
+            column: a_preisorig
+        aSkAktiv:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: a_sk_aktiv
+        aSkPreis:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            options:
+                default: '0.00'
+            column: a_sk_preis
+        aSkPreisorig:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            options:
+                default: '0.00'
+            column: a_sk_preisorig
+        aDay:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: a_day
+        aVtext:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_vtext
+        aRtext:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_rtext
+        aHash:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: a_hash
+    lifecycleCallbacks: {  }

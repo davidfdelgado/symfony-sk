@@ -1,0 +1,45 @@
+{% extends '@AppBundle/base.html.twig' %}
+
+{%  block page_content %}
+    <div class="row">
+        <section class="col-lg-12">
+            <div class="box box-primary">
+                <div class="box-header ui-sortable-handle">
+                    <a href="{{ path('artikel_orte_erstellen') }}" class="btn btn-primary pull-right">
+                        Neue Destination erstellen
+                    </a>
+                    </div>
+                <div class="box-body">
+                    <table class="table" id="datatable" >
+                        <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Status</th>
+                            <th>Destination</th>
+                            <th>Kürzel</th>
+                            <th>Anzahl</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for desti in orte %}
+                                <tr>
+                                    <td>{{ desti.getAOId() }}</td>
+                                    <td>{{ desti.getAOStatus() }}</td>
+                                    <td>{{ desti.getAOName() }}</td>
+                                    <td>{{ desti.getAONameKurz() }}</td>
+                                    <td>{{ desti.getAOKategorien()|length }}</td>
+                                    <td><a href="{{ path('artikel_kategorien', {'aoid': desti.getAOId() }) }}" class="btn btn-primary"><i class="fa fa-scope-o"></i> anschauen</a></td>
+                                    <td><a href="{{ path('artikel_orte_bearbeiten', {'aoid': desti.getAOId() }) }}"><i class="fa fa-gear"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+

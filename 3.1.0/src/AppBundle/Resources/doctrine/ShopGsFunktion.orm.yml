@@ -1,0 +1,142 @@
+AppBundle\Entity\ShopGsFunktion:
+    type: entity
+    table: SHOP_GS_Funktion
+    indexes:
+        gs_f_zu_kat:
+            columns:
+                - gs_f_zu_kat
+        gs_f_zu_ort:
+            columns:
+                - gs_f_zu_ort
+        gs_f_leistung:
+            columns:
+                - gs_f_leistung
+        gs_f_zu_kat_art:
+            columns:
+                - gs_f_zu_kat_art
+    id:
+        gsFId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: gs_f_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        gsFStatus:
+            type: boolean
+            nullable: false
+            column: gs_f_status
+        gsFGueltigBis:
+            type: datetime
+            nullable: false
+            column: gs_f_gueltig_bis
+        gsFWt:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                comment: Wochentage
+            column: gs_f_wt
+        gsFBeschreibung:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+                comment: 'öffentliche Beschreibung'
+            column: gs_f_beschreibung
+        gsFBeschreibungIntern:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: gs_f_beschreibung_intern
+        gsFDetails:
+            type: string
+            nullable: true
+            length: 1024
+            options:
+                fixed: false
+            column: gs_f_details
+        gsFEuro:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            column: gs_f_euro
+        gsFEuroPro:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            options:
+                default: '0.00'
+            column: gs_f_euro_pro
+        gsFProz:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: gs_f_proz
+        gsFLeistung:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: gs_f_leistung
+        gsFMind:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            options:
+                default: '0.00'
+            column: gs_f_mind
+        gsFUpdated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: gs_f_updated
+        gsFCreated:
+            type: datetime
+            nullable: false
+            options:
+                default: '0000-00-00 00:00:00'
+            column: gs_f_created
+    manyToOne:
+        gsFZuOrt:
+            targetEntity: ArtikelOrte
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                gs_f_zu_ort:
+                    referencedColumnName: a_o_id
+            orphanRemoval: false
+        gsFZuKat:
+            targetEntity: ArtikelKategorie
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                gs_f_zu_kat:
+                    referencedColumnName: a_k_id
+            orphanRemoval: false
+        gsFZuKatArt:
+            targetEntity: ArtikelKategorieArt
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                gs_f_zu_kat_art:
+                    referencedColumnName: a_a_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

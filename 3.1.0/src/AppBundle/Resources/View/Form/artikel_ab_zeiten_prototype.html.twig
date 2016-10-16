@@ -1,0 +1,20 @@
+{% if item is defined %}
+    <div class="row">
+        <div class="col-sm-1">
+            {{ form_widget(item.aAbStatus) }}
+        </div>
+        <div class="col-sm-2">
+            {{ form_widget(item.aAbTyp) }}
+        </div>
+        <div class="col-sm-5">
+            {{ form_row(item.aAbDatum) }}
+        </div>
+        <div class="col-sm-3">
+            {{ form_widget(item.aAbInfo) }}
+        </div>
+        <div class="col-sm-1 col-del">
+
+        </div>
+    </div>
+
+{% endif %}

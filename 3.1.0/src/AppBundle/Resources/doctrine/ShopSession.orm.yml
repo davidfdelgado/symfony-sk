@@ -1,0 +1,80 @@
+AppBundle\Entity\ShopSession:
+    type: entity
+    table: SHOP_Session
+    indexes:
+        s_gs:
+            columns:
+                - s_gs
+    uniqueConstraints:
+        w_id:
+            columns:
+                - w_id
+        id:
+            columns:
+                - id
+    id:
+        wId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: w_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        id:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+        sSession:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: s_session
+        sKid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: s_kid
+        sLang:
+            type: string
+            nullable: true
+            length: 8
+            options:
+                fixed: false
+            column: s_lang
+        sRnnr:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: s_rnnr
+        sDate:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: s_date
+        sRdatum:
+            type: date
+            nullable: false
+            column: s_rdatum
+    manyToOne:
+        sGs:
+            targetEntity: ShopGsCodes
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                s_gs:
+                    referencedColumnName: gs_n_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,63 @@
+AppBundle\Entity\ShopBilderZu:
+    type: entity
+    table: SHOP_Bilder_Zu
+    indexes:
+        Kategorie:
+            columns:
+                - bz_bi_id
+        bz_ak_id:
+            columns:
+                - bz_ak_id
+    id:
+        bzId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: bz_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        bzBezeichnung:
+            type: string
+            nullable: true
+            length: 128
+            options:
+                fixed: false
+            column: bz_bezeichnung
+        bzTitle:
+            type: string
+            nullable: true
+            length: 64
+            options:
+                fixed: false
+            column: bz_title
+        bzTyp:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: bz_typ
+    manyToOne:
+        bzBi:
+            targetEntity: ShopBilder
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                bz_bi_id:
+                    referencedColumnName: bi_id
+            orphanRemoval: false
+        bzAk:
+            targetEntity: ArtikelKategorie
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                bz_ak_id:
+                    referencedColumnName: a_k_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

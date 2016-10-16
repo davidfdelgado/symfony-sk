@@ -1,0 +1,323 @@
+{% extends '@AppBundle/base.html.twig' %}
+
+{%  block page_content %}
+    {% if vorgang is defined %}
+    <section class="invoice">
+        <!-- title row -->
+        {{ form_start(form) }}
+        {{ form_row(form._token) }}
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="page-header">
+                    <i class="fa fa-globe"></i> Vorgang: {{ vorgang.bRnnr }}
+                    <small class="pull-right">Erstellt: {{ vorgang.bCreated|date('d.m.Y H:i:s') }}</small>
+                </h2>
+                {{ form_errors(form) }}
+            </div><!-- /.col -->
+        </div>
+        <!-- info row -->
+        <div class="row invoice-info">
+            {% if vorgang.bKid is defined %}
+            <div class="col-sm-4 invoice-col">
+                <a class="btn btn-primary btn-flat btn-small" href="{{ path('be_kunde_bearbeiten', {'k_id' : vorgang.bKid.kId}) }}""><i class="fa fa-user"></i> Kunde bearbeiten</a>
+                <br>
+                <address>
+                    <strong>{{ vorgang.bKid.kFirma }}</strong><br>
+                    <strong>{{ vorgang.bKid.kVorname ~ ' ' ~ vorgang.bKid.kNachname }}</strong><br>
+                    {{ vorgang.bKid.kStrasse }}<br>
+                    {{ vorgang.bKid.kPlz ~ ' ' ~ vorgang.bKid.kStadt }}<br>
+                    Tel: {{ vorgang.bKid.kTelefonnummer }}<br>
+                    Email: {{ vorgang.bKid.kEmail }}
+                </address>
+            </div><!-- /.col -->
+            {% endif %}
+
+            <div class="col-sm-4 invoice-col">
+                <dl class="dl-horizontal">
+                    <dt>Vorgang</dt>
+                    <dd>{{ vorgang.bRnnr }}</dd>
+                    <dt>Kundennummer</dt>
+                    <dd>{{ vorgang.bKid.kId }}
+                    <dt>Erstellt von</dt>
+                    <dd>{{ vorgang.bUser.getAuVorname() ~ ' ' ~ vorgang.bUser.getAuNachname() }}
+                    <hr>
+                    <dt>Erstellt</dt>
+                    <dd>{{ vorgang.bCreated|date('d.m.Y H:i') }}</dd>
+                    <dt>Gebucht</dt>
+                    <dd>{{ vorgang.bBooked|date('d.m.Y H:i') }}</dd>
+                    <dt>Bezahlt</dt>
+                    <dd>{{ vorgang.bPayed|date('d.m.Y H:i') }}</dd>
+                </dl>
+            </div><!-- /.col -->
+
+            <div class="col-sm-1 invoice-col">
+            </div>
+            <div class="col-sm-3 invoice-col">
+                {{ form_widget(form.bArt) }}
+                <br>
+                {{ form_widget(form.bDatum) }}
+                <hr>
+                {{ form_row(form.speichern) }}
+                <br>
+                {{ form_widget(form.close) }}
+                {{ form_widget(form.stornieren) }}
+                <hr>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+
+        <!-- Table row -->
+        <div class="row">
+            <div class="col-xs-12 table-responsive ">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#positionen" data-toggle="tab" aria-expanded="false">Positionen ({{ vorgang.bPositionen|length }})</a></li>
+                        <li class=""><a href="#mitteilungen" data-toggle="tab" aria-expanded="false">Mitteilungen{% if vorgang.bMitteilungen is defined %} ({{ vorgang.bMitteilungen|length }}){% endif %}</a></li>
+                        <li class=""><a href="#settings" data-toggle="tab" aria-expanded="true"></a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="positionen">
+                            <table id="datatable" class="table table-striped collection no-add">
+                                <tbody>
+                                {%  for kats in vorgang.getBKategorien() %}
+                                    <tr>
+                                        <th class="info"></th>
+                                        <th class="info">{{ kats.getAKName }}</th>
+                                        <th class="info"></th>
+                                        <th class="info">{% if kats.datum is defined and kats.datum is not null %}{{ kats.datum|date('d.m.Y') }}{% endif %}</th>
+                                        <th class="info" colspan="2" align="right">
+                                        {% if vorgang.bArt in [3,4] %}
+                                            {% if kats.scan %}
+                                                <i class="fa fa-qrcode"></i> {{ kats.scan.getScAu().getAuVorname() ~ ' ' ~ kats.scan.getScAu().getAuNachname() ~ ' am ' ~ kats.scan.getScScanned()|date('d.m.Y H:i')}}
+                                            {% else %}
+                                                <a href="{{ path('sc_checkin', {'nr': vorgang.getNr(), 'kat' : kats.getAKId()}) }}" target="blank" class="btn btn-xs btn-primary"><i class="fa fa-qrcode"></i> einchecken</a>
+                                            {% endif %}
+                                        {% endif %}
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>Anzahl</th>
+                                        <th>Beschreibung</th>
+                                        <th>Artikelnummer</th>
+                                        <th>Datum</th>
+                                        <th>Preis</th>
+                                        <th>Summe</th>
+                                    </tr>
+                                    {%  for position in kats.checkin_positionen %}
+                                        <tr>
+                                            <td>{{ position.pAnzahl }}</td>
+                                            <td>{{ position.pBezeichnung }}</td>
+                                            <td>{{ position.pTid.pkArtikelnummer }}</td>
+                                            <td>{{ position.pDatum|date('d.m.Y')|default("") }}</td>
+                                            <td>€ {{ position.pPreis|number_format(2, ',', '.') }}</td>
+                                            <td>€ {{ (position.pAnzahl * position.pPreis)|number_format(2, ',', '.') }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endfor %}
+                                {#
+                                <tr>
+                                    <td colspan="6" align="center">
+                                            <select id="buc_pos" data-src="{{ path('ajax_suche_tickets') }}" class="" width="30%">
+                                            </select>
+                                    </td>
+                                </tr>
+                                #}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane" id="mitteilungen">
+
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+
+        <div class="row">
+            <!-- accepted payments column -->
+            <div class="col-xs-6">
+                <p class="lead">Payment Methods:</p>
+                <img src="../../dist/img/credit/visa.png" alt="Visa">
+                <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
+                <img src="../../dist/img/credit/american-express.png" alt="American Express">
+                <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
+                <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+                </p>
+            </div><!-- /.col -->
+            <div class="col-xs-6">
+                <p class="lead">Amount Due 2/22/2014</p>
+                <div class="table-responsive">
+                    <table class="table ">
+                        <tbody><tr>
+                            <th style="width:50%">Subtotal:</th>
+                            <td>$250.30</td>
+                        </tr>
+                        <tr>
+                            <th>Tax (9.3%)</th>
+                            <td>$10.34</td>
+                        </tr>
+                        <tr>
+                            <th>Shipping:</th>
+                            <td>$5.80</td>
+                        </tr>
+                        <tr>
+                            <th>Total:</th>
+                            <td>€ {{ vorgang.bSumme|format(2, ',', '.') }}</td>
+                        </tr>
+                        </tbody></table>
+                </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+
+        <!-- this row will not appear when printing -->
+        <div class="row no-print">
+            <div class="col-xs-12">
+                <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+                <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
+                <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>
+            </div>
+        </div>
+        {{ form_end(form, {'render_rest': false}) }}
+    </section>
+    {% endif %}
+
+{% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('bundles/avanzuadmintheme/vendor/adminlte/plugins/select2/select2.css') }}" />
+        <script src="{{ asset('bundles/avanzuadmintheme/vendor/adminlte/plugins/select2/select2.min.js') }}"></script>
+    {% endblock %}
+
+    {% block jscripts_inline %}
+    <script>
+
+        var $collectionHolder;
+        // setup an "add a tag" link
+
+        var $addTagLink = $('<div class="row pvbutton"><div class="col-sm-12"><br /><a href="#" class="add_tag_link btn btn-block btn-success fa fa-plus"> hinzufügen</a></div></div>');
+        var $addTagLinkTable = $('<tr class="pvbutton" ><td colspan="42"><a href="#" class="add_tag_link btn btn-block btn-success fa fa-plus"> hinzufügen</a></td></tr>');
+
+        jQuery(document).ready(function() {
+
+            $collectionHolder = $('.collection');
+            $collectionHolder.find('.col-del').each(function() {
+                addTagFormDeleteLink($(this));
+            });
+
+            $collectionHolder.each(function(){
+                $collectionHold = $(this);
+                if(!$collectionHold.hasClass('no-add')){
+                    if($collectionHold.prop('tagName') == "TABLE") {
+                        $collectionHold.append('<tr class="pvbutton" ><td colspan="42"><a href="#" class="add_tag_link btn btn-block btn-success fa fa-plus"> hinzufügen</a></td></tr>');
+                    } else {
+                        $collectionHold.append('<div class="row pvbutton"><div class="col-sm-12"><br /><a href="#" class="add_tag_link btn btn-block btn-success fa fa-plus"> hinzufügen</a></div></div>');
+                    }
+
+                }
+            });
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $collectionHolder.each(function() {
+                var $collectionSingleHolder = $(this);
+                $collectionSingleHolder.find('.pvbutton a').on('click', function(e) {
+
+                    // prevent the link from creating a "#" on the URL
+                    e.preventDefault();
+
+                    // add a new tag form (see next code block)
+
+                    $newLinkLi = $collectionSingleHolder.find('.add_tag_link');
+
+                    addTagForm($collectionSingleHolder, $newLinkLi);
+                    addTagFormDeleteLink($newFormLi);
+                });
+            });
+        });
+
+        function formatArtikelState (repo) {
+            if (!repo.tid) return repo.text;
+
+            var markup = '<div class="clearfix">' +
+                    '<div class="col-sm-4">' + repo.kategorie + '</div>' +
+                    '<div class="col-sm-4">' + repo.name + '</div>' +
+                    '<div class="col-sm-3">' + repo.tid + '</div>' +
+                    '</div>';
+            markup += "";
+            return markup;
+        };
+
+        jQuery('#buc_pos').select2({
+
+        theme: "classic",
+        width: '600px',
+        height: '70px',
+        placeholder: "Suche nach Tickets",
+        minimumInputLength: 2,
+        ajax: {
+            url: jQuery('#buc_pos').attr('data-src'),
+            dataType: 'json',
+            delay: 200,
+            data: function (params) {
+                return {
+                    q: params.term, // search term
+                    page: params.page
+                };
+            },
+            processResults: function (data, params) {
+
+                // parse the results into the format expected by Select2
+                // since we are using custom formatting functions we do not need to
+                // alter the remote JSON data, except to indicate that infinite
+                // scrolling can be used
+                params.page = params.page || 1;
+
+                return {
+                results: data.items
+                };
+            },
+            cache: true
+        },
+
+        escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+        templateResult: formatArtikelState, // omitted for brevity, see the source of this page
+        templateSelection: formatArtikelState
+        });
+
+        function addTagForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+            // get the new index
+            var index = $collectionHolder.data('index');
+            // Replace '__opt_prot__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__opt_prot__/g, index);
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+            // Display the form in the page in an li, before the "Add a tag" link li
+            $collectionHolder.find('.pvbutton').before(newForm);
+            $newFormLi = $collectionHolder.find('.col-del').last();
+            start();
+        }
+
+        function addTagFormDeleteLink($tagFormLi) {
+            var $removeFormA = $('<a href="#" class="btn btn-danger btn-sm fa fa-trash"></a>');
+            $tagFormLi.append($removeFormA);
+            $removeFormA.on('click', function(e) {
+            // prevent the link from creating a "#" on the URL
+            e.preventDefault();
+            // remove the li for the tag form
+            if($tagFormLi.parent().prop('tagName') == "TR"){
+            $tagFormLi.parent().remove();
+            } else {
+            $tagFormLi.parent().parent().remove();
+            }
+            });
+        }
+        </script>
+        {{ parent() }}
+    {% endblock %}

@@ -1,0 +1,101 @@
+{% extends '@AppBundle/base.html.twig' %}
+
+{% block page_content %}
+    <div class="row">
+        <section class="col-lg-8">
+            <div class="box box-primary" style="position: relative;">
+                <div class="box-header ui-sortable-handle" style="cursor: move;">
+                    <i class="fa fa-info"></i>
+                    <h3 class="box-title">Rechnungen</h3>
+                    <div class="box-tools pull-right">
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <p>Untenstehend finden Sie alle Rechnungen aufgelistet. Diese sind unterteilt in "offene" als auch in "bezahlte" Rechnungen. Sie können jederzeit die monatlichen Rechnungen aufrufen und einsehen.</p>
+                    <p>Sobald eine Rechnung erstellt wurde, erhalten Sie umgehend eine Nachricht auf Ihren E-Mail Account. Die Rechnungen werden nun in "offene" und "bezahlte" Rechnungen unterteilt, sodass Sie immer nachvollziehen wie der Status ist.</p>
+                </div>
+                <div class="box-footer clearfix no-border">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            {% if rechnungen.offen|length %}
+                                <li class="active">
+                                <a href="#offen" data-toggle="tab"><b>offene ({{ rechnungen.offen|length }})</b></a>
+                            </li>
+                            {% endif %}
+                            {% if rechnungen.bezahlt|length %}
+                                <li>
+                                <a href="#bezahlt" data-toggle="tab">bezahlte ({{ rechnungen.bezahlt|length }})</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                        <div class="tab-content">
+                            {% if  rechnungen.offen|length %}
+                            <div class="tab-pane active" id="offen">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Rechnungsnummer</th>
+                                            <th align="right">Summe</th>
+                                            <th>Status</th>
+                                            <th>Zahlungsziel</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                {% for rn in rechnungen.offen %}
+                                    <tr>
+                                        <td>{{ rn.bRnnr }}</td>
+                                        <td align="right">{{ rn.bSumme|number_format(2, ',', '.') }} €</td>
+                                        <td>{{ rn.bBezahltLabel }}</td>
+                                        <td>{{ rn.bZahlungen.first().getRnFeallig()|date('d.m.y') }}</td>
+                                        <td align="right">
+                                            {% if rn.getBRechnung() %}
+                                                <a href="{{ rn.getBRechnung().getWeblink() }}" target="_blank" class="btn btn-success btn-xs">
+                                                    <i class="fa fa-file"></i> Rechnung anschauen
+                                                </a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                </table>
+                            </div><!-- /.tab-pane -->
+                            {% endif %}
+                            {% if rechnungen.bezahlt|length %}
+                            <div class="tab-pane" id="bezahlt">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Rechnungsnummer</th>
+                                        <th align="right">Summe</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                {% for rn in rechnungen.bezahlt %}
+                                    <tr>
+                                        <td>{{ rn.bRnnr }}</td>
+                                        <td align="right">{{ rn.bSumme|number_format(2, ',', '.') }} €</td>
+                                        <td>{{ rn.bBezahltLabel }}</td>
+                                        <td align="right">
+                                            {% if rn.getBRechnung() %}
+                                                <a href="{{ rn.getBRechnung().getWeblink() }}" target="_blank" class="btn btn-success btn-xs">
+                                                    <i class="fa fa-file"></i> Rechnung anschauen
+                                                </a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div><!-- /.tab-pane -->
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

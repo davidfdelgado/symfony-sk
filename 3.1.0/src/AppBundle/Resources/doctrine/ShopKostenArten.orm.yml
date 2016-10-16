@@ -1,0 +1,67 @@
+AppBundle\Entity\ShopKostenArten:
+    type: entity
+    table: SHOP_Kosten_Arten
+    id:
+        xaId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: xa_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        xaStatus:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: xa_status
+        xaVon:
+            type: date
+            nullable: false
+            column: xa_von
+        xaBis:
+            type: date
+            nullable: false
+            column: xa_bis
+        xaBezeichnung:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: xa_bezeichnung
+        xaZusatz:
+            type: string
+            nullable: true
+            length: 128
+            options:
+                fixed: false
+            column: xa_zusatz
+        xaNetto:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            column: xa_netto
+        xaBrutto:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            column: xa_brutto
+        xaMwst:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: xa_mwst
+        xaProzent:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: xa_prozent
+    lifecycleCallbacks: {  }

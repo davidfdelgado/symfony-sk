@@ -1,0 +1,58 @@
+AppBundle\Entity\ArtikelKombi:
+    type: entity
+    table: ARTIKEL_Kombi
+    uniqueConstraints:
+        duplicates:
+            columns:
+                - ak_oid
+                - ak_kid
+    id:
+        akId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: ak_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        akOid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                comment: 'Key zum Ort'
+            column: ak_oid
+        akKid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                comment: 'Key zur Kategorie'
+            column: ak_kid
+        akRabatt:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            options:
+                comment: 'Höhe des Rabattes'
+            column: ak_rabatt
+        akMin:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            options:
+                comment: 'Nur für Tickets die MIN kosten'
+            column: ak_min
+        akMax:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            options:
+                comment: 'Nur für Tickets die MAX kosten'
+            column: ak_max
+    lifecycleCallbacks: {  }

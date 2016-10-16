@@ -1,0 +1,29 @@
+<div class="col-sm-4">
+    <div class="small-box bg-red">
+        <div class="inner">
+            <h3>{{ uebersicht.vorgaenge.count() }}</h3>
+            <p>
+                <select class="form-control">
+                    {% for monate in uebersicht.monate %}
+                        <option value="{{ monate.key() }}">{{ monate.datum|date('Y M') }} ({{ monate.count() }})</option>
+                    {% endfor %}
+                </select>
+            </p>
+            <p>
+                <select class="form-control">
+                    <option>Alle</option>
+                    {% for user in uebersicht.users %}
+                        <option value="{{ user.auId }}">{{ user.auVorname ~ ' ' ~ user.auNachname }}</option>
+                    {% endfor %}
+                </select>
+            </p>
+        </div>
+        <div class="icon">
+            <i class="ion ion-pie-graph"></i>
+        </div>
+        <a href="#" class="small-box-footer">
+            More info <i class="fa fa-arrow-circle-right"></i>
+        </a>
+    </div>
+
+</div>

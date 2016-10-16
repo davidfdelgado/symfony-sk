@@ -1,0 +1,29 @@
+AppBundle\Entity\Test:
+    type: entity
+    table: test
+    id:
+        a:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        b:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+        c:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        d:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+    lifecycleCallbacks: {  }

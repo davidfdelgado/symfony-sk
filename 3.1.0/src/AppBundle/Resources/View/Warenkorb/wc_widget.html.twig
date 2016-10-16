@@ -1,0 +1,49 @@
+
+{% if warenkorb is defined %}
+    {%  if index != true %}
+    <li id="hctcart">
+    {% endif %}
+    <ul>
+        <li class="header">
+            {{ 'Sie haben <b>%total%</b> Leistungen im Warenkorb.'|trans({'%total%':warenkorb.sKategorien|length}, 'AvanzuAdminTheme')|raw }}<br>
+            {{ 'Insgesamt <b>%anzahl%</b> Tickets'|trans({'%anzahl%':warenkorb.sTicketsAnzahl}, 'AvanzuAdminTheme')|raw }}
+            <a href="{{ path('vb_ticket_buchen') }}" ><span class="btn btn-success btn-block"><i class="fa fa-shopping-cart"></i> {{' buchen | bearbeiten'|trans({}, 'AvanzuAdminTheme')}}</span></a>
+            <hr>
+        </li>
+        {% for leistung in warenkorb.sWarenkorb if warenkorb.sWarenkorb|length > 0 %}
+            <li><!-- start message -->
+                    <div class="tk" data-wcid="{{ leistung.wcId }}">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4>
+                                    {{ leistung.wcName|replace({' (': ' ('})|raw }}
+                                </h4>
+                                {% if leistung.wcDatum %}
+                                    <small>
+                                        <i class="fa fa-calendar-o"></i> {{ leistung.wcDatum|date('d.m.Y') }}
+                                    {% if leistung.wcDatum|date('H:i') != "00:00" %}
+                                        <i class="fa fa-clock-o"></i> {{ leistung.wcDatum|date('H:i') }}
+                                    {% endif %}
+                                    </small>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                            <input type="text" name="ti_anzahl" class="ti_anzahl" value="{{ leistung.wcMenge }}" readonly="readonly">
+                            x € {{  leistung.wcPreis }}
+                                <button type="button" class="btn btn-xs btn-error pull-right" onclick="wc_cartdel(this)"><i class="fa fa-trash"></i></button>
+                                <button type="button" class="btn btn-xs btn-error pull-right minus" onclick="wc_cartcha(this)" value="-"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-xs btn-error pull-right plus" onclick="wc_cartcha(this)" value="+"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <hr>
+                    </span>
+            </li><!-- end message -->
+        {% endfor %}
+        <li class="footer"><a href="{{ path('vb_ticket_auswahl') }}" >[ {{'zur Ticket auswahl'|trans({}, 'AvanzuAdminTheme')}} ]</a></li>
+    </ul>
+    {%  if index != true %}
+    </li>
+    {% endif %}
+{% endif %}

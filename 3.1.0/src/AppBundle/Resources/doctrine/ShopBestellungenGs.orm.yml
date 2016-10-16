@@ -1,0 +1,49 @@
+AppBundle\Entity\ShopBestellungenGs:
+    type: entity
+    table: SHOP_Bestellungen_GS
+    indexes:
+        gs_b_nid:
+            columns:
+                - gs_b_nid
+        gs_b_bid:
+            columns:
+                - gs_b_bid
+    id:
+        gsBId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: gs_b_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        gsEingeloest:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: gs_eingeloest
+    manyToOne:
+        gsBBid:
+            targetEntity: ShopBestellungen
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                gs_b_bid:
+                    referencedColumnName: nr
+            orphanRemoval: false
+        gsBNid:
+            targetEntity: ShopGsCodes
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                gs_b_nid:
+                    referencedColumnName: gs_n_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

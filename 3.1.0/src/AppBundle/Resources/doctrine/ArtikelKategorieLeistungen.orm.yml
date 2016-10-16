@@ -1,0 +1,50 @@
+AppBundle\Entity\ArtikelKategorieLeistungen:
+    type: entity
+    table: ARTIKEL_Kategorie_Leistungen
+    indexes:
+        akl_kl_id:
+            columns:
+                - akl_kl_id
+        akl_k_id:
+            columns:
+                - akl_k_id
+    id:
+        aklId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: akl_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        aklBezeichnung:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: akl_bezeichnung
+    manyToOne:
+        aklK:
+            targetEntity: ArtikelKategorie
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                akl_k_id:
+                    referencedColumnName: a_k_id
+            orphanRemoval: false
+        aklKl:
+            targetEntity: KategorieLeistungen
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                akl_kl_id:
+                    referencedColumnName: kl_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

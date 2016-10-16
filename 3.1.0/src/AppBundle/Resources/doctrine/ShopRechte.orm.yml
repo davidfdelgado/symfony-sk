@@ -1,0 +1,48 @@
+AppBundle\Entity\ShopRechte:
+    type: entity
+    table: SHOP_Rechte
+    id:
+        idR:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_r
+            generator:
+                strategy: IDENTITY
+    fields:
+        linkR:
+            type: string
+            nullable: false
+            length: 200
+            options:
+                fixed: false
+            column: link_r
+        rechteR:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: rechte_r
+        bezeichnungR:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+            column: bezeichnung_r
+        masterR:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: master_r
+        orderR:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '99'
+            column: order_r
+    lifecycleCallbacks: {  }

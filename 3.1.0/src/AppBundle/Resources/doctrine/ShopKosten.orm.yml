@@ -1,0 +1,47 @@
+AppBundle\Entity\ShopKosten:
+    type: entity
+    table: SHOP_Kosten
+    id:
+        xId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: x_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        xRnnr:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: x_rnnr
+        xArt:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: x_art
+        xCreated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: x_created
+        xCost:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            column: x_cost
+        xInfo:
+            type: string
+            nullable: true
+            length: 512
+            options:
+                fixed: false
+            column: x_info
+    lifecycleCallbacks: {  }

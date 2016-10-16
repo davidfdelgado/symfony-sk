@@ -1,0 +1,106 @@
+AppBundle\Entity\ShopPosition:
+    type: entity
+    table: SHOP_Position
+    indexes:
+        p_bid:
+            columns:
+                - p_bid
+        p_bid_2:
+            columns:
+                - p_bid
+    id:
+        pId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: p_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        pTid:
+            type: string
+            nullable: false
+            length: 16
+            options:
+                fixed: false
+            column: p_tid
+        pAnzahl:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: p_anzahl
+        pPreis:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            column: p_preis
+        pMwst:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: p_mwst
+        pBezeichnung:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: p_bezeichnung
+        pBezeichnungEn:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: p_bezeichnung_en
+        pVtext:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: p_vtext
+        pRtext:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: p_rtext
+        pPaId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: p_pa_id
+        pAdatum:
+            type: string
+            nullable: false
+            length: 10
+            options:
+                fixed: false
+            column: p_adatum
+        pDatum:
+            type: datetime
+            nullable: true
+            column: p_datum
+        pCheckin:
+            type: datetime
+            nullable: false
+            column: p_checkin
+    manyToOne:
+        pBid:
+            targetEntity: ShopBestellungen
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                p_bid:
+                    referencedColumnName: nr
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

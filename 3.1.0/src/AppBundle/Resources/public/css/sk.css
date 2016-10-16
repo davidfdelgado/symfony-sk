@@ -1,0 +1,179 @@
+/* Warenkorb */
+.wc_hidden {
+    display: none;
+}
+.input_time_field input:checked+label {
+    color: #fff;
+    background-color: #286090;
+    border-color: #204d74
+}
+
+#loaddiv {
+    position: fixed;
+    padding: 10px;
+    width: 25%;
+    top: 50%;
+    left: 50%;
+    margin: -12% 0 0 -12%;
+    text-align: center;
+}
+
+.divload {
+    width: 100%;
+    height: 100%;
+    line-height: 100px;
+    font-size: 150%;
+    text-align: center;
+    vertical-align: top;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: 10;
+}
+
+.uncl {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.loading tbody>tr {
+    opacity: 0.3;
+}
+
+/*
+ Warenkorb Datepicker CSS
+*/
+.input_date_div .ui-state-active;
+.input_date_div .ui-state-default,.input_date_div .ui-widget-content .ui-state-default {
+    border: 1px solid transparent;
+}
+div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-helper-clearfix.ui-datepicker-multi.ui-datepicker-multi-2 {
+    width: auto !important;
+}
+.input_date_div .ui-widget-content {
+    border: none;
+}
+
+/*
+ Warenkorb Datepicker CSS ENDE
+ Warenkorb Widget in Navbar
+*/
+
+#hctcart ul li h4, #hctcart ul li p {
+    margin-left: 0px;
+}
+#hctcart hr {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+#hctcart h4 {
+    font-size: 13px;
+    margin-bottom: 0px;
+    margin-top: 0;
+}
+
+#hctcart h4 small {
+    position: absolute;
+    top:0;
+    right:0;
+}
+
+#hctcart p {
+    font-size: 11px;
+}
+#hctcart ul {
+    list-style: none;
+    padding: 0;
+}
+#hctcart ul>li {
+    padding: 5px;
+}
+#hctcart ul>li>span.tk {
+    margin: 0;
+    padding: 0px;
+    position: relative;
+    display: block;
+    border-bottom: 1px solid #f4f4f4;
+}
+#hctcart ul>li>span.tk:before {
+    content: " ";
+    display: table;
+}
+#hctcart ul>li>span.tk:after {
+    content: " ";
+    display: table;
+    clear: both;
+}
+#hctcart .ti_anzahl {
+    width: 40px;
+    display: inline;
+    text-align: center;
+}
+
+#hctcart .tk>.row {
+    margin-bottom: 7px;
+}
+
+.transdiv {
+    opacity: 0.2;
+    cursor: pointer;
+}
+
+/* Zeitentabelle */
+
+.zeitentabelle .month {
+    display: table;
+    width: 100%;
+    border-spacing: 10px;
+}
+.zeitentabelle .kws {
+    display: table-row;
+    table-layout: fixed;
+}
+.zeitentabelle small {
+    clear: both;
+    font-size: 55%;
+}
+.zeitentabelle .days {
+    font-size: 150%;
+    display: table-cell;
+    padding: 5px;
+    text-align: center;
+    width: calc(100% / 7);
+    margin: 0 5px;
+}
+
+.zeitentabelle hr {
+    border-color: #ddd;
+    margin-bottom:5px;
+}
+
+/* Zeitentabelle ENDE */
+
+/* VorgangsÜbersichten */
+.table.noStornos .storno {
+    display: none;
+}
+
+.table .storno {
+    background-color: rgba(255, 0, 0, 0.7) !important;
+}
+/* VorgangsÜbersichten ende */
+
+/* RegisterForm */
+#register-box {
+    width: 720px;
+    margin: 7% auto
+}
+
+/* RegisterForm END*/
+
+
+/* Scan */
+
+#vg-check {
+    margin: 0 auto;
+    width: 230px;
+
+}
+
+/* Scan Ende */

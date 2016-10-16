@@ -1,0 +1,33 @@
+AppBundle\Entity\ShopUntergruppen:
+    type: entity
+    table: SHOP_Untergruppen
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        mainKat:
+            type: string
+            nullable: true
+            length: 5
+            options:
+                fixed: false
+            column: main_kat
+        anzeige:
+            type: string
+            nullable: true
+            length: 5
+            options:
+                fixed: false
+        name:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

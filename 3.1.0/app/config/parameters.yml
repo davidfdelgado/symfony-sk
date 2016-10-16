@@ -1,0 +1,17 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: sk_new
+    database_user: root
+    database_password: pa55w0rd
+    mailer_transport: smtp
+    mailer_host: mail.your-server.de
+    mailer_user: noreply@sightseeing-kontor.de
+    mailer_password: 01ls5W48v17p16R2
+    secret: c9732d7256159cb842cabccd218752d62ed3cf72
+    subdomain_main: www
+    subdomain_vertrieb: vb
+    subdomain_scan: scan
+    subdomain_backend: backend
+    domain: test.local

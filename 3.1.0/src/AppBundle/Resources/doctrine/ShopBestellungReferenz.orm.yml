@@ -1,0 +1,54 @@
+AppBundle\Entity\ShopBestellungReferenz:
+    type: entity
+    table: SHOP_Bestellung_Referenz
+    indexes:
+        IDX_47AAEAF0C27DF04F:
+            columns:
+                - rf_id
+    uniqueConstraints:
+        rf_id:
+            columns:
+                - rf_id
+                - rf_char
+    id:
+        rfIndex:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: rf_index
+            generator:
+                strategy: IDENTITY
+    fields:
+        rfType:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: rf_type
+        rfChar:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: rf_char
+        rfCreated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: rf_created
+    manyToOne:
+        rf:
+            targetEntity: ShopBestellungen
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                rf_id:
+                    referencedColumnName: nr
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

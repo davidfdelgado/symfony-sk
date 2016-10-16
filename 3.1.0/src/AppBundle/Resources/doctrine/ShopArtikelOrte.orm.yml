@@ -1,0 +1,57 @@
+AppBundle\Entity\ShopArtikelOrte:
+    type: entity
+    table: SHOP_Artikel_Orte
+    uniqueConstraints:
+        a_o_name_kurz:
+            columns:
+                - a_o_name_kurz
+    id:
+        aOId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: a_o_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        aOName:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: a_o_name
+        aONameKurz:
+            type: string
+            nullable: false
+            length: 12
+            options:
+                fixed: false
+            column: a_o_name_kurz
+        aOCreated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: a_o_created
+        aOCreatedU:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_o_created_u
+        aOUpdate:
+            type: datetime
+            nullable: false
+            options:
+                default: '0000-00-00 00:00:00'
+            column: a_o_update
+        aOUpdateU:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_o_update_u
+    lifecycleCallbacks: {  }

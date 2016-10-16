@@ -1,0 +1,86 @@
+{% extends '@AppBundle/base.html.twig' %}
+
+
+{% if profile is defined %}
+
+    {% block page_content %}
+        {% set fm = profile.auVid %}
+        <section class="invoice">
+            <!-- title row -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <h2 class="page-header">
+                        <i class="fa fa-globe"></i> {{ fm.avHotelname ~ ' - ' ~ profile.auNachname }}
+                    </h2>
+                </div><!-- /.col -->
+            </div>
+            <!-- info row -->
+            <div class="row invoice-info">
+
+                <div class="col-sm-6 invoice-col">
+                    <h4>Firmenprofil:</h4>
+                    <address>
+                        <strong>{{ fm.avHotelname }}</strong><br>
+                        Anprechpartner: {{ fm.avAnsprechpartner }}<br>
+                        {% if fm.avKid is defined %}
+                            <hr>
+                            {{ fm.avKid.kTelefonnummer }}<br>
+                            {{ fm.avKid.kEmail }}<br>
+                            {{ fm.avKid.kStrasse }}<br>
+                            {{ fm.avKid.kPlz ~ ' ' ~ fm.avKid.kStadt }}<br>
+                        {% endif %}
+                    </address>
+                </div><!-- /.col -->
+
+                <div class="col-sm-6 invoice-col">
+                    <a href="{{ path('vb_benutzer_bearbeiten',{'auid' : profile.auId } ) }}" class="btn btn-success pull-right"><i class="fa fa-gear"></i> Profil bearbeiten</a>
+                    <h4>Benutzer:</h4>
+                    <address>
+                        <strong>{{ profile.auVorname ~ ' ' ~ profile.auNachname }}</strong><br>
+                        {{ profile.auBn }}<br>
+                        {{ profile.auEmail }}<br>
+                        {{ profile.auTelefon }}
+                        <hr>
+                        Erstellt am: {{ profile.auCreated|date('d.m.Y H:i') }}
+                    </address>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+
+            <!-- Table row -->
+            <div class="row">
+                <div class="col-xs-12 table-responsive">
+                    <hr>
+                    <h4>Loginhistorie des aktuellen Benutzers:</h4>
+                    <p>Im folgenden eine Übersicht über die letzten registrierten Logins</p>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Wochentag</th>
+                            <th>Eingelogt</th>
+                            <th>Ausgelogt</th>
+                            <th>IP</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for logs in profile.auLogs|slice(0, 50) %}
+                            <tr>
+                                <td>{{ logs.agCreated|date('D') }}</td>
+                                <td>{{ logs.agCreated|date('d.m.Y H:i') }}</td>
+                                <td>{% if logs.agExpire %}{{ logs.agExpire|date('d.m.Y H:i') }}{% else %}-/-{% endif %}</td>
+                                <td>{{ logs.agIp }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+
+            <!-- this row will not appear when printing -->
+            <div class="row no-print">
+
+            </div>
+        </section>
+    {% endblock %}
+
+{% endif %}

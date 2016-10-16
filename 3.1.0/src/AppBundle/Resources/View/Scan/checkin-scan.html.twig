@@ -1,0 +1,99 @@
+{% extends '@AppBundle/Scan/base-scan.html.twig' %}
+
+
+{% block page_content %}
+
+    {% if vorgang is defined %}
+        {{ form_start(form) }}
+            {{ form_widget(form.kategorie) }}
+        {% if vorgang %}
+            {% for kategorie in vorgang.getBKategorien() if checkedinn == false %}
+                <div class="row">
+                    <div class="col-sm-12">
+                            <div class="box box-solid">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><i class="fa fa-qrcode"></i> {{ kategorie.aKName }}</h3>
+                                    <div class="box-tool pull-right">
+                                        {{ kategorie.aKAnbieterId.avHotelname }}
+                                    </div>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    {% if kategorie.checkin_positionen is defined %}
+
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Kunde ({{ vorgang.bKid.kid }})</th>
+                                                    <td>{{ vorgang.bKid.getKVorname() ~ ' ' ~ vorgang.bKid.getKNachname() }}</td>
+                                                    <td></td>
+                                                </tr>
+                                            {% if kategorie.checkin_datum %}
+                                                <tr>
+                                                    <th>Leistungen gültig AM</th>
+                                                    <td>{{ kategorie.checkin_datum|date('d.m.Y') }}</td>
+                                                    <td></td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <th>Leistungen gültig AB</th>
+                                                    <td>{{ vorgang.getBDatum()|date('d.m.Y') }}</td>
+                                                    <td></td>
+                                                </tr>
+                                            {% endif %}
+                                            </thead>
+                                            <tbody>
+                                            {% for p in kategorie.checkin_positionen %}
+                                                <tr>
+                                                    <td></td>
+                                                    <td>{{ p.pBezeichnung|replace({' (': "", ')': "", (kategorie.aKName) : ""}) }}</td>
+                                                    <td>x {{ p.pAnzahl }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                    <hr>
+                                    {% if kategorie.scan is defined and kategorie.scan %}
+                                        <div class="callout callout-warning">
+                                            <i class="fa fa-info-circle"></i>
+                                            {% if kategorie.scan.scAu == app.user %}
+                                                Die Leistung wurden Ihnen bereits eingescannt
+                                            {% else %}
+                                                Die Leistung wurden bereits eingescannt
+                                            {% endif %}
+
+                                            {% if kategorie.scan.scScanned|date('Y-m-d') == "now"|date('Y-m-d') %}
+                                                und zwar heute um {{ kategorie.scan.scScanned|date('H:i') }}.
+                                            {% else %}
+                                                am {{ kategorie.scan.scScanned|date('d.m.Y H:i') }}.
+                                            {% endif %}
+                                        </div>
+                                    {% elseif kategorie.checkin is defined %}
+
+                                        {% if kategorie.checkin == true %}
+                                            {{ form_row(form.checkin) }}
+                                        {% elseif kategorie.checkin == false %}
+
+                                            {% if kategorie.checkin_message %}
+                                                <div class="callout callout-warning">
+                                                    <i class="fa fa-warning"></i> {{ kategorie.checkin_message }}
+                                                </div>
+                                            {% else %}
+                                                <div class="callout callout-danger">
+                                                    <i class="fa fa-warning"></i> Hmm, die Leistung kann nicht eingelöst werden.
+                                                </div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                </div><!-- /.box-body -->
+                            </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+
+        {% endif %}
+        {{ form_end(form, {'render_rest' : false}) }}
+    {% endif %}
+{% endblock %}

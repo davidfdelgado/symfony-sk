@@ -1,0 +1,76 @@
+{% extends '@AppBundle/base.html.twig' %}
+
+{%  block page_content %}
+    {% if tabellen is defined %}
+    <div class="row">
+        <section class="col-lg-12">
+            <div class="box box-primary" style="position: relative;">
+                <div class="box-header ui-sortable-handle" style="cursor: move;">
+                    </div>
+                <div class="box-body">
+                    <table class="table" id="datatable" data-src="{{ path('ajax_kunden') }}" >
+                        <thead>
+
+                        <tr>
+                            <th>KundenID</th>
+                            <th>Firma</th>
+                            <th>Vorname</th>
+                            <th>Nachname</th>
+                            <th>eMail</th>
+                            <th>Telefon</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+    {% endif %}
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/avanzuadmintheme/vendor/adminlte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+{% endblock %}
+
+
+{% block jscripts_inline %}
+    {{ parent() }}
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+
+            var datatables = jQuery('#datatable');
+
+            if(datatables.length){
+                if(datatables.is('[data-src]') === true && 1==1){
+
+                    var datatablesrc = datatables.attr('data-src');
+                    datatables.DataTable({
+                        "processing": true,
+                        "stateSave": true,
+                        "serverSide": true,
+                        "ajax": datatablesrc,
+                        "lengthMenu": [[50, 100, 250, -1], [50, 100, 250, "Alle"]],
+                        "order": [[ 0, 'DESC' ]],
+                        "paging":         true
+                    });
+                } else {
+                    datatables.DataTable({
+                        "stateSave": true,
+                        "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Alle"]],
+                        "order": [[ 0, 'DESC' ]],
+                        "scrollY":        '60vh',
+                        "scrollCollapse": true,
+                        "paging":         false
+                    });
+                }
+            }
+        });
+    </script>
+{% endblock %}
+

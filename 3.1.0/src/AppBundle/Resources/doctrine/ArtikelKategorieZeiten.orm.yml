@@ -1,0 +1,62 @@
+AppBundle\Entity\ArtikelKategorieZeiten:
+    type: entity
+    table: ARTIKEL_Kategorie_Zeiten
+    indexes:
+        az_k_id:
+            columns:
+                - az_azt_id
+    uniqueConstraints:
+        az_k_id_2:
+            columns:
+                - az_azt_id
+                - az_day
+                - az_time
+    id:
+        azId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: az_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        azTyp:
+            type: boolean
+            nullable: false
+            options:
+                comment: '1 = uhrzeit, 2 = öffnungszeit'
+                default: '1'
+            column: az_typ
+        azStatus:
+            type: boolean
+            nullable: false
+            column: az_status
+        azDay:
+            type: boolean
+            nullable: false
+            column: az_day
+        azTime:
+            type: time
+            nullable: false
+            column: az_time
+        azZusatz:
+            type: string
+            nullable: true
+            length: 128
+            options:
+                fixed: false
+            column: az_zusatz
+    manyToOne:
+        azAzt:
+            targetEntity: ArtikelKategorieZeitenTabelle
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                az_azt_id:
+                    referencedColumnName: azt_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

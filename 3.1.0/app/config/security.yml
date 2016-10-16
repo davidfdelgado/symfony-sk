@@ -1,0 +1,126 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+
+    encoders:
+            AppBundle\Entity\AgenturUser:
+                 algorithm: plaintext
+
+    providers:
+        our_db_provider:
+            entity:
+                class: AppBundle:AgenturUser
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+
+        login_firewall:
+            pattern:   ^/login$
+            anonymous: ~
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        login_vertrieb:
+            pattern:   ^/login$
+            host:  vb\.test\.local
+            anonymous: ~
+        login_register:
+            pattern:   ^/register$
+            host:  vb\.test\.local
+            anonymous: ~
+        vertrieb:
+            host:  %subdomain_vertrieb%\.test\.local
+            anonymous: ~
+            http_basic: ~
+            provider: our_db_provider
+            access_denied_url: /login_denied
+            form_login:
+                 login_path: /login
+                 check_path: /login_check
+                 use_referer: true
+                 success_handler: security.authentication.handler
+            logout:
+                 path: /logout
+                 target: /
+                 success_handler: security.authentication.handler
+
+        login_backend:
+            pattern:   ^/login$
+            host:  backend\.test\.local
+            anonymous: ~
+        backend:
+            host:  backend\.test\.local
+            anonymous: ~
+            http_basic: ~
+            provider: our_db_provider
+            access_denied_url: /login_denied
+            form_login:
+                 use_referer: true
+                 login_path: /login
+                 check_path: /login_check
+            logout:
+                 path: /logout
+                 target: /
+
+        login_scan:
+            pattern:   ^/login$
+            host:  scan\.test\.local
+            anonymous: ~
+        scan:
+            host:  scan\.test\.local
+            anonymous: ~
+            http_basic: ~
+            provider: our_db_provider
+            access_denied_url: /login_denied
+            form_login:
+                 login_path: /login
+                 check_path: /login_check
+            logout:
+                 path: /logout
+                 target: /
+
+        default:
+            anonymous: ~
+            http_basic: ~
+            provider: our_db_provider
+            form_login:
+                 login_path: /login
+                 check_path: /login_check
+            logout:
+                  path:   /logout
+                  target: /
+        main:
+            anonymous: ~
+            # activate different ways to authenticate
+
+            # http_basic: ~
+            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: ~
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+    access_control:
+        # require ROLE_ADMIN for /admin*
+        - { host: vb.test.local, path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { host: vb.test.local, path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { host: scan.test.local, path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { host: backend.test.local, path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { host: vb.test.local, roles: ROLE_VERTRIEB }
+        - { host: scan.test.local, roles: ROLE_SCANNER }
+        - { host: backend.test.local, roles: ROLE_USER }
+
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+
+    role_hierarchy:
+        ROLE_VERTRIEB: ROLE_SCANNER
+        ROLE_VERTRIEB_ACCOUNT_PARTNER: ROLE_VERTRIEB
+        ROLE_VERTRIEB_ACCOUNT_VERMITTLER: ROLE_VERTRIEB
+        ROLE_VERTRIEB_ADMIN:   ROLE_VERTRIEB
+
+        ROLE_USER:    ROLE_SCANNER
+        ROLE_ADMIN:    ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_VERTRIEB_ADMIN, ROLE_ALLOWED_TO_SWITCH]

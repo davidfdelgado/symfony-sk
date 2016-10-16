@@ -1,0 +1,31 @@
+AppBundle\Entity\ArtikelKategorieDatum:
+    type: entity
+    table: ARTIKEL_Kategorie_Datum
+    id:
+        adId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: ad_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        adKId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: ad_k_id
+        adDate:
+            type: date
+            nullable: false
+            column: ad_date
+        adType:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: ad_type
+    lifecycleCallbacks: {  }

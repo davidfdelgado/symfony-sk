@@ -1,0 +1,60 @@
+{% extends '@AppBundle/base.html.twig' %}
+
+{%  block page_content %}
+    <div class="row">
+        <section class="col-lg-12">
+            <div class="box box-primary">
+                <div class="box-header ui-sortable-handle">
+                    </div>
+
+                {% for ort in orte %}
+                <div class="box-body">
+                    <a href="{{ path('artikel_kategorien_erstellen', {'aoid': ort.getAOid() }) }}" class="btn btn-success"><i class="fa fa-plus"></i> Neue Kategorie zu {{ ort.aOName }} hinzufügen </a>
+                    <hr>
+                    <table class="table" id="datatable" >
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Destination</th>
+                                <th>Kurz</th>
+                                <th>Mwst (%)</th>
+                                <th>Status</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for art in ort.getAOArten() %}
+
+                                <tr class="active">
+                                    <th><i class="fa {{ art.aAIcon }}"></i></th>
+                                    <th>{{ art.aABeschreibung|capitalize }}</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+
+                                {% for kat in art.getAAKategorien() %}
+                                <tr class="{% if kat.getAKArtikel()|length == 0 %}danger{% elseif kat.getAKAktiv() == 0 %}warning{% endif %}">
+                                    <td>{{ kat.getAKId() }}</td>
+                                    <td>{{ kat.getAKName() }}</td>
+                                    <td>{{ kat.getAKNameKurz() }}</td>
+                                    <td>{{ kat.getAKMwst() }} %</td>
+                                    <td>{{ kat.getAKAktivLabel() }}</td>
+                                    <td><a href="{{ path('artikel_kategorien', {'aoid': kat.getAKOId().getAOId() }) }}" class="btn btn-primary btn-block"><i class="fa fa-search"></i> {{ kat.getAKArtikel()|length }} Artikel anschauen</a></td>
+                                    <td><a href="{{ path('artikel_kategorien_bearbeiten', {'akid': kat.getAKId() }) }}" class="btn btn-success"><i class="fa fa-gear"></i></a></td>
+                                </tr>
+                                {% endfor %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+{% endblock %}
+

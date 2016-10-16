@@ -1,0 +1,33 @@
+AppBundle\Entity\KategorieLeistungen:
+    type: entity
+    table: KATEGORIE_Leistungen
+    id:
+        klId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: kl_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        klStatus:
+            type: boolean
+            nullable: false
+            column: kl_status
+        klBeschreibung:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: kl_beschreibung
+        klClass:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: kl_class
+    lifecycleCallbacks: {  }

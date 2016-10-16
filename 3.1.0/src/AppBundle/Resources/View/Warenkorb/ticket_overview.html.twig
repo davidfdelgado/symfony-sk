@@ -1,0 +1,217 @@
+{% embed '@AppBundle/base.html.twig' %}
+
+    {% if destinationen is defined and destinationen|length > 0%}
+        {% block page_content %}
+
+            {% block content %}
+
+                {% if destinationen|length > 1 %}
+
+
+                {% else %}
+                    {% set destination = destinationen.0 %}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <div id="centercontent">
+                                        <h1>Ticketübersicht</h1>
+                                        <p>Hier haben Sie nun die Möglichkeit das gewünschte Ticket zu wählen und in den Warenkorb zu legen. Sie beenden den Ticketkauf mit dem Klicken auf den "Tickets buchen"-Button.</p>
+                                        <br>
+                                        <p><i>In ihrem Ticketkorb können pro Ticket <b>maximal 60</b> hinzugefügt werden. Im unteren Auswahlfeld werden Ihnen jedoch nur 20 anzeigt. Durch mehrfaches hinzufügen, werden diese in Ihrem Ticketkorb addiert und aktualisiert.</i></p>
+                                        <br>
+                                        <center><p>Sollten Sie weitere Anfragen haben, beispielsweise; Gruppen, Hochzeiten, Junggesellenabschiede, Schulklassen kontaktieren Sie bitte Ihren Betreuer Daniel Costa.</p></center>
+                                    <table class="table">
+                                        <tr>
+                                        {% for arten in destination.arten %}
+                                            <td>
+                                                <div class="small-box {{ arten.aACssClass|default('bg-aqua') }}" onclick="switchArten(this)" data-akart="{{ arten.aAId }}">
+                                                    <div class="inner">
+                                                        <h4>{{ '%total% Angebote'|trans({'%total%':arten.kategorien|length}) }}</h4>
+                                                        <p>{{ arten.aABeschreibung|capitalize }}</p>
+                                                    </div>
+                                                    <div class="icon">
+                                                        <i class="fa {{ arten.aAIcon|default('fa-shopping-cart') }}"></i>
+                                                    </div>
+                                                    <span class="small-box-footer">
+                                                        ausblenden <i class="fa fa-arrow-circle-down"></i>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        {% endfor %}
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="box-body" id="accordion">
+                                        <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+                                    <script>
+                                    </script>
+                                    {% for kat in destination.aOKategorien %}
+                                        <div class="panel box box-primary art{{ kat.aKArt.aAId }}">
+                                            <div class="box-header with-border">
+                                                <h4 class="box-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ kat.aKId }}" aria-expanded="false" class="collapsed">
+                                                        {{ kat.aKName }}
+                                                    </a>
+                                                </h4>
+                                                <div class="box-tools pull-right">
+                                                    <small>
+                                                    {{ kat.aKArt.aABeschreibung|capitalize }}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            <div id="collapse{{ kat.aKId }}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                                <div class="box-body">
+                                                    <div class="col-md-7 border-right">
+                                                        <h3>{{ kat.aKUeberschrift }}</h3>
+                                                        <p>{{ kat.aKBeschreibung|raw }}</p>
+                                                        {% if kat.aKPoints|length > 0 %}
+                                                            <table class="table">
+                                                                <tr>
+                                                                    {% for point in kat.aKPoints %}
+                                                                    <td align="center" {% if loop.last != true %}class="border-right"{% endif %}>
+                                                                        <p>
+                                                                            <i class="fa {{ point.aklKl.klClass }} fa-2x "></i><br>
+                                                                            {{ point.aklBezeichnung|default(point.aklKl.klBeschreibung)|raw }}
+                                                                        </p>
+                                                                    </td>
+                                                                    {% endfor %}
+                                                                </tr>
+                                                            </table>
+                                                        {% endif %}
+                                                        {% if kat.aKid > 0 %}
+                                                            {{ render(controller('AppBundle:Widget:zeiten', {'a_k_id': kat.aKid})) }}
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="col-md-5 ">
+                                                        <div class="wct kat{{ kat.aKid }}" data-kid="{{ kat.aKid }}">
+                                                            <table class="table">
+                                                            {% for ticket in kat.aKArtikel %}
+                                                                <tr class="tik{{ ticket.aId }}">
+                                                                    <td>{{ ticket.aName }}</td>
+                                                                    <td width="80px" align="right">
+                                                                        <b>€ {{ ticket.aPreis|number_format(2, ',','.') }}</b><br>
+                                                                        {%  if ticket.aPreisOrig > 0 %}
+                                                                        <s>€ {{ ticket.aPreisOrig|number_format(2, ',','.') }}</s>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                    <td width="70px">
+                                                                        <select class="form-control num" onchange="wc_cartaddgroup_check({{ kat.aKid }})" name="tianzahl" data-tid="{{ ticket.aId }}">
+                                                                            {% for i in 0..60 %}
+                                                                                <option value="{{ i }}">{{ i }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </td>
+                                                                    <!--
+                                                                    <td width="80px">
+                                                                        <button type="button" class="btn btn-primary btn-block" data-tid="{{ ticket.aId }}" onclick="wc_cartadd_new({{ ticket.aId }})"><i class="fa fa-cart-plus"></i></button>
+                                                                    </td>
+
+                                                                    -->
+                                                                </tr>
+                                                            {% endfor %}
+                                                            </table>
+
+                                                            {% if kat.isDateRequired() %}
+                                                            <div class="row input_date_div">
+                                                                <div class="col-md-12 input_date_field" style="display: none;">
+                                                                    <p><center><b>Kalender:</b></center></p>
+                                                                    <input type="hidden" readonly class="tkdate" name="datum{{ kat.aKid }}" value=""/>
+                                                                    <div class="datepk kid{{ kat.aKid }}""></div>
+                                                                    <div class="ti-clear"></div>
+                                                                </div>
+                                                                <div class="col-md-12 input_time_field" style="display: none;">
+                                                                    <p><center><b>Uhrzeit:</b></center></p>
+                                                                    <div class="input_content btn-group btn-group-justified">
+
+                                                                    </div>
+                                                                    <hr>
+                                                                </div>
+                                                                <script type="text/javascript">
+
+                                                                    {% set daten = kat.getDatepickerArray() %}
+                                                                    $(function(){
+                                                                        var anzahl_month = 2;
+                                                                        if( jQuery(window).width() < 560 && jQuery(window).width() > 0){
+                                                                            anzahl_month = 1;
+                                                                        }
+                                                                        var d=new Date();
+                                                                        var array = {{ daten|json_encode()|raw }};
+                                                                        jQuery(".datepk.kid{{ kat.getAKId() }}").datepicker({
+                                                                            regional: "de",
+                                                                            onSelect: function(ele) { checkForTime(ele, {{ kat.getAKId() }}); },
+                                                                            altFormat:'yy-mm-dd',
+                                                                            numberOfMonths: anzahl_month,
+                                                                            dateFormat:'dd.mm.yy',
+                                                                        {% if daten|length > 0 or 1==1 %}
+                                                                            minDate: new Date(array[0]),
+                                                                                    maxDate: new Date(array[array.length - 1]),
+
+                                                                                    beforeShowDay:	function(date){
+                                                                                var day=date.getDay();
+                                                                                var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                                                                                return[($.inArray(string, array) != -1),'']}
+                                                                        {% endif %}
+                                                                    }).find('.ui-state-active').removeClass('ui-state-active ui-state-hover');
+
+                                                                    });
+                                                                </script>
+                                                            </div>
+                                                            {% endif %}
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <button type="button" name="" onclick="wc_cartadd_new({{ kat.aKid }})" class="btn btn-block btn-primary uncl hctwargroupinn">
+                                                                        <i class="fa fa-cart-plus"></i>
+                                                                        Tickets buchen
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+        <span id="loaddiv" style="display: none;">
+            <div class="load well well-lg">
+                Das Ticket<br>wird<br>hinzugefügt<br><br>
+            </div>
+            <div class="check well well-lg">
+                Überprüfe <br> Datum &amp; zeit<br><br>
+            </div>
+            <div class="date well well-lg">
+                Bitte wählen Sie ein <br> Datum / Uhrzeit aus<br><br>
+            </div>
+            <div class="ready well well-lg">
+                Das Ticket<br>wurde Ihrem Ticketkorb<br>hinzugefügt.
+            </div>
+            <div class="abort well well-lg">
+                Das Ticket<br>konnte nicht hinzugefügt werden.<br>Bitte versuchen Sie es nochmal.
+            </div>
+            <div class="anzahl well well-lg">
+                Bitte wählen Sie eine Anzahl an Tickets aus.
+            </div>
+        </span>
+        {% endblock %}
+        {% endblock %}
+
+        {% block jscripts_inline %}
+            {{ parent() }}
+            <script src="{{ asset('bundles/app/js/cart_add.js') }}"></script>
+        {% block stylesheets %}
+        {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/avanzuadmintheme/vendor/jquery-ui/themes/base/jquery-ui.css') }}"/>
+        {% endblock %}
+
+        {% endblock %}
+
+    {% endif %}
+
+{% endembed %}

@@ -1,0 +1,94 @@
+AppBundle\Entity\ArtikelEinbuchung:
+    type: entity
+    table: ARTIKEL_Einbuchung
+    indexes:
+        a_x_kid:
+            columns:
+                - a_x_kid
+        a_x_bid:
+            columns:
+                - a_x_bid
+        a_x_uid:
+            columns:
+                - a_x_uid
+    id:
+        aXId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: a_x_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        aXReferenz:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: a_x_referenz
+        aXAnzahl:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '1'
+            column: a_x_anzahl
+        aXPreis:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            column: a_x_preis
+        aXPreisBrutto:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            options:
+                default: '0.00'
+            column: a_x_preis_brutto
+        aXCreated:
+            type: datetime
+            nullable: false
+            column: a_x_created
+        aXUpdated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: a_x_updated
+    manyToOne:
+        aXBid:
+            targetEntity: ShopBestellungen
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                a_x_bid:
+                    referencedColumnName: nr
+            orphanRemoval: false
+        aXKid:
+            targetEntity: ArtikelKategorie
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                a_x_kid:
+                    referencedColumnName: a_k_id
+            orphanRemoval: false
+        aXUid:
+            targetEntity: AgenturUser
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                a_x_uid:
+                    referencedColumnName: au_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

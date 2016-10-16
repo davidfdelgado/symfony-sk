@@ -1,0 +1,39 @@
+AppBundle\Entity\ShopPositionArtikelnummern:
+    type: entity
+    table: SHOP_Position_Artikelnummern
+    uniqueConstraints:
+        pk_artikelnummer:
+            columns:
+                - pk_artikelnummer
+    id:
+        pkId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: pk_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        pkArtikelnummer:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: pk_artikelnummer
+        pkKategorie:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: pk_kategorie
+        pkXaId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                comment: 'Verknüpfung mit den Kostenarten'
+            column: pk_xa_id
+    lifecycleCallbacks: {  }

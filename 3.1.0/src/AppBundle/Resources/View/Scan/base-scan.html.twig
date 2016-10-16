@@ -1,0 +1,20 @@
+{% extends '@AppBundle/base.html.twig' %}
+
+{% block avanzu_navbar %}
+{% endblock %}
+
+{% block avanzu_sidebar %}
+    {{ render(controller('AvanzuAdminThemeBundle:Sidebar:menu', {'request':app.request})) }}
+{% endblock %}
+
+{%  block javascripts_head %}
+    <script type="text/javascript" src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/modernizr.js') }}"></script>
+    <script src="{{ asset('bundles/avanzuadmintheme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+{% endblock %}
+
+{% block jscripts_inline %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

@@ -1,0 +1,52 @@
+AppBundle\Entity\ShopMitteilungen:
+    type: entity
+    table: SHOP_Mitteilungen
+    indexes:
+        m_bid:
+            columns:
+                - m_bid
+        m_art:
+            columns:
+                - m_art
+    id:
+        mId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: m_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        mCreated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: m_created
+        mValue:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: m_value
+        mArt:
+            type: boolean
+            nullable: false
+            options:
+                comment: '0 = Kundenkommenter, 1 = Backendkommenter, 2 = Kategoriekommentar'
+            column: m_art
+    manyToOne:
+        mBid:
+            targetEntity: ShopBestellungen
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                m_bid:
+                    referencedColumnName: nr
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

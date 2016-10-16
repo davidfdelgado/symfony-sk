@@ -1,0 +1,58 @@
+AppBundle\Entity\ArtikelKategorieZeitenTabelle:
+    type: entity
+    table: ARTIKEL_Kategorie_Zeiten_Tabelle
+    indexes:
+        azt_k_id:
+            columns:
+                - azt_k_id
+    id:
+        aztId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: azt_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        aztStatus:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '1'
+            column: azt_status
+        aztTyp:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: azt_typ
+        aztVon:
+            type: date
+            nullable: false
+            column: azt_von
+        aztBis:
+            type: date
+            nullable: false
+            column: azt_bis
+        aztBeschreibung:
+            type: string
+            nullable: false
+            length: 128
+            options:
+                fixed: false
+            column: azt_beschreibung
+    manyToOne:
+        aztK:
+            targetEntity: ArtikelKategorie
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                azt_k_id:
+                    referencedColumnName: a_k_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

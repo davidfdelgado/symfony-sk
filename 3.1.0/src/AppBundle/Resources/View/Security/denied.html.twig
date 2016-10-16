@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Log in {% endblock %}</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('bundles/avanzuadmintheme/static/'~ app.environment ~'/styles/admin-lte-all.css') }}" />
+    {% endblock %}
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+
+    <![endif]-->
+</head>
+<body class="hold-transition login-page">
+
+<div class="login-box">
+    <div class="login-logo">
+        <a href="https://www.sightseeing-kontor.de/" title="Sightseeing Kontor - Homepage"><img src="{{ asset('bundles/app/images/Sightseeing-Kontor-Zweizeiler.png') }}" style="max-width: 200px;;"></a>
+    </div>
+    <div class="login-box-body">
+        <p class="login-box-msg">Log dich ein um deine Sitzung zu starten!</p>
+        {% if error %}
+            <div class="auth-error">
+                {{ error.messageKey }}
+            </div>
+        {% endif %}
+        <form action="{{ path('login_check') }}" method="post">
+            <div class="form-group has-feedback">
+                <input type="text" name="_username" class="form-control" placeholder="Benutzername" value="{{ last_username }}"/>
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group">
+                <input type="password" name="_password" class="form-control" placeholder="Passwort"/>
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="footer">
+                <p>
+                    <button type="submit" class="btn bg-olive btn-block">Einlogen</button>
+                </p>
+
+                <p><a href="#">I forgot my password</a></p>
+
+                <a href="register.html" class="text-center">Register a new membership</a>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+
+
+<!-- jQuery 2.0.2 -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/bundles/avanzuadmintheme/vendor/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+
+</body>
+</html>

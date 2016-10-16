@@ -1,0 +1,228 @@
+AppBundle\Entity\ArtikelKategorie:
+    type: entity
+    table: ARTIKEL_Kategorie
+    indexes:
+        a_k_art:
+            columns:
+                - a_k_art
+        a_k_anbieter_id:
+            columns:
+                - a_k_anbieter_id
+        a_k_zusatz:
+            columns:
+                - a_k_zusatz
+    uniqueConstraints:
+        Artikelkurz:
+            columns:
+                - a_k_oid
+                - a_k_name_kurz
+    id:
+        aKId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: a_k_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        aKAktiv:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: a_k_aktiv
+        aKOid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_k_oid
+        aKAnsicht:
+            type: boolean
+            nullable: false
+            options:
+                comment: 'Für die Ticketübersicht im Backend Bereich, ob getrennt oder zusammengefasst!'
+                default: '0'
+            column: a_k_ansicht
+        aKDruck:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                comment: '0 = Drucken, 1 = auf mobile, 2 = geht separat raus'
+                default: '0'
+            column: a_k_druck
+        aKAnbieter:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: a_k_anbieter
+        aKAnbieterId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_k_anbieter_id
+        aKKonto:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: a_k_konto
+        aKName:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: a_k_name
+        aKNameEn:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: a_k_name_en
+        aKNameKurz:
+            type: string
+            nullable: false
+            length: 12
+            options:
+                fixed: false
+            column: a_k_name_kurz
+        aKSort:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_k_sort
+        aKUeberschrift:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: a_k_ueberschrift
+        aKUeberschriftEn:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: a_k_ueberschrift_en
+        aKBeschreibung:
+            type: string
+            nullable: false
+            length: 2048
+            options:
+                fixed: false
+            column: a_k_beschreibung
+        aKBeschreibungEn:
+            type: string
+            nullable: true
+            length: 2048
+            options:
+                fixed: false
+            column: a_k_beschreibung_en
+        aKBewerten:
+            type: boolean
+            nullable: false
+            options:
+                comment: 'Kunden die diese Kategorie gebucht haben, dürfen diese auf bewerten'
+                default: '1'
+            column: a_k_bewerten
+        aKTime:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: a_k_time
+        aKTimeMinDate:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: a_k_time_min_date
+        aKDauer:
+            type: time
+            nullable: false
+            column: a_k_dauer
+        aKVoucher:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: a_k_voucher
+        aKEinbuchen:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: a_k_einbuchen
+        aKVertrieb:
+            type: boolean
+            nullable: false
+            options:
+                comment: 'Ob es auf der Vertriebsseite angezeigt werden soll'
+                default: '1'
+            column: a_k_vertrieb
+        aKPositionDarst:
+            type: boolean
+            nullable: false
+            options:
+                comment: 'Wie positionen dargestellt werden... (p /P)'
+                default: '0'
+            column: a_k_position_darst
+        aKAbrechnung:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                comment: 'Definiert über was das Produkt abgerechnet wird, SK oder HCT'
+                default: '1'
+            column: a_k_abrechnung
+        aKVtext:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_k_vtext
+        aKRtext:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_k_rtext
+        aKMwst:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '19'
+            column: a_k_mwst
+    manyToOne:
+        aKArt:
+            targetEntity: ArtikelKategorieArt
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                a_k_art:
+                    referencedColumnName: a_a_id
+            orphanRemoval: false
+        aKZusatz:
+            targetEntity: KategorieZusatz
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                a_k_zusatz:
+                    referencedColumnName: akz_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

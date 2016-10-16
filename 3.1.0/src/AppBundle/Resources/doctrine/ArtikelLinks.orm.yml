@@ -1,0 +1,44 @@
+AppBundle\Entity\ArtikelLinks:
+    type: entity
+    table: ARTIKEL_Links
+    uniqueConstraints:
+        l_links:
+            columns:
+                - l_links
+    id:
+        lId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: l_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        lArt:
+            type: boolean
+            nullable: false
+            column: l_art
+        lKid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: l_kid
+        lLinks:
+            type: string
+            nullable: false
+            length: 128
+            options:
+                fixed: false
+            column: l_links
+        lLanguage:
+            type: string
+            nullable: false
+            length: 6
+            options:
+                fixed: false
+            column: l_language
+    lifecycleCallbacks: {  }

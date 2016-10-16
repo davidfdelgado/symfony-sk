@@ -1,0 +1,71 @@
+AppBundle\Entity\ShopArtikelKategorie:
+    type: entity
+    table: SHOP_Artikel_Kategorie
+    id:
+        aKId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: a_k_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        aKOid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_k_oid
+        aKName:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: a_k_name
+        aKNameKurz:
+            type: string
+            nullable: false
+            length: 12
+            options:
+                fixed: false
+            column: a_k_name_kurz
+        aKVtext:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_k_vtext
+        aKVtextEn:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_k_vtext_en
+        aKRtext:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_k_rtext
+        aKRtextEn:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_k_rtext_en
+        aKRabatt1:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_k_rabatt1
+        aKRabatt2:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_k_rabatt2
+    lifecycleCallbacks: {  }

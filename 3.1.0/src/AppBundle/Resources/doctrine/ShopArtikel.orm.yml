@@ -1,0 +1,164 @@
+AppBundle\Entity\ShopArtikel:
+    type: entity
+    table: SHOP_Artikel
+    uniqueConstraints:
+        artikelnummer:
+            columns:
+                - artikelnummer
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        tAktiv:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: t_aktiv
+        tRabattAktiv:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: t_rabatt_aktiv
+        kategorie:
+            type: string
+            nullable: true
+            length: 10
+            options:
+                fixed: false
+        artikelnummer:
+            type: string
+            nullable: true
+            length: 30
+            options:
+                fixed: false
+        art:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        name:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+        nameEn:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+            column: name_en
+        beschreibung:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+        beschreibungEn:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: beschreibung_en
+        preis:
+            type: decimal
+            nullable: true
+            precision: 7
+            scale: 2
+        preisorig:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            options:
+                default: '0.00'
+        skAktiv:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: sk_aktiv
+        skPreis:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            options:
+                default: '0.00'
+            column: sk_preis
+        skPreisorig:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            options:
+                default: '0.00'
+            column: sk_preisorig
+        bild:
+            type: string
+            nullable: true
+            length: 30
+            options:
+                fixed: false
+        status:
+            type: string
+            nullable: true
+            length: 5
+            options:
+                fixed: false
+        day:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+        unikat:
+            type: simple_array
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        mwst:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        vtext:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        vtextEn:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: vtext_en
+        rtext:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        rtextEn:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: rtext_en
+        tLink:
+            type: string
+            nullable: true
+            length: 64
+            options:
+                fixed: false
+            column: t_link
+    lifecycleCallbacks: {  }

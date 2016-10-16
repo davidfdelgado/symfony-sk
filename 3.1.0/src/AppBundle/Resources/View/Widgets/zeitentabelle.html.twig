@@ -1,0 +1,56 @@
+
+    {% if zeiten is defined and zeiten is not null and zeiten|length > 0 %}
+        {% set wochenindex = [1,2,3,4,5,6,0] %}
+        <p align="center">
+            <button type="button" class="btn btn-success" onclick="jQuery('.zeitentabelle.zt{{ kategorie.getAKId() }}').slideToggle(500)" ><i class="fa fa-clock-o"></i> Abfahrtszeiten</button>
+        </p>
+        <div class="nav-tabs-custom zeitentabelle zt{{ kategorie.getAKId() }}" style="display: none">
+            <ul class="nav nav-tabs">
+            {% set active = zeiten|keys|first %}
+            {% for key, jahr in zeiten %}
+                <li {% if key == active %}class="active"{% endif %}><a href="#tab_{{ key }}" data-toggle="tab">{{ key }}</a></li>
+            {% endfor %}
+            </ul>
+
+            <div class="tab-content">
+                {% for key, jahr in zeiten %}
+                <div class="tab-pane {% if key == active %}active{% endif %}" id="tab_{{ key }}">
+                    {% for key, monat in jahr %}
+                    <div class="month">
+                        <h4>{{ key }}</h4>
+                        {% for woche in monat %}
+                            <div class="kws">
+                                {% for key, i in wochenindex %}
+                                    {% if woche[i] is defined %}
+                                    {% set tag = woche[i] %}
+                                    <div class="days active well">
+                                        {{ tag.tag|date('d') }}.<hr>
+                                        {% if tag.zeiten is defined %}
+                                            {% for zeit in tag.zeiten %}
+                                                <small>
+                                                {% if zeit.uhrzeit is defined %}
+                                                    <i class="fa fa-clock-o"></i> {{ zeit.uhrzeit }}
+                                                {% elseif zeit.open is defined %}
+                                                    {{ zeit.open|replace({'-': ' - '})|raw }}
+                                                {% endif %}
+                                                </small><br>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    {% else %}
+                                    <div class="days">
+
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+            <center><p>[ Keine Zeiten vorhanden ]</p></center>
+    {% endif %}

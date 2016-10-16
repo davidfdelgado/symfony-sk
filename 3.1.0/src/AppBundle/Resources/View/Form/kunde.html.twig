@@ -1,0 +1,99 @@
+{% extends '@AppBundle/base.html.twig' %}
+
+{%  block page_content %}
+
+    <section class="content">
+        <!-- title row -->
+        <div class="row">
+
+            {% if form is defined %}
+            <div class="col-xs-7">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-user"></i> Kunde</h3>
+                        {% if kunde is defined and kunde.kId is defined %}
+                            <small class="pull-right">Erstellt am: {{ kunde.kADatum|date('d.m.Y H:i') }}</small>
+                        {% endif %}
+                    </div><!-- /.box-header -->
+                    <!-- form start -->
+                    {{ form_start(form, {'attr': {'class': ''}}) }}
+
+                        <div class="box-body">
+                            {{ form_row(form._token) }}
+                            {{ form_errors(form) }}
+                            {{ form_row(form.kFirma) }}
+                            {{ form_row(form.kAnrede) }}
+                            {{ form_row(form.kVorname) }}
+                            {{ form_row(form.kNachname) }}
+                            <hr>
+                            <h4><i class="fa fa-map-marker"></i> Adressinformationen</h4>
+                            {{ form_row(form.kPlz) }}
+                            {{ form_row(form.kStadt) }}
+                            <hr>
+                            <h4><i class="fa fa-phone"></i> Kontaktinformatioen</h4>
+                            {{ form_row(form.kEmail) }}
+                            {{ form_row(form.kTelefonnummer) }}
+                            <hr>
+                            {{ form_row(form.kChannel) }}
+                            {{ form_row(form.kNewsletter) }}
+                            {{ form_row(form.kBewertungLink) }}
+
+                        </div>
+                        <div class="box-footer">
+                            {{ form_widget(form.speichern) }}
+                            {{ form_widget(form.close) }}
+                        </div>
+                     {{ form_end(form, {'render_rest': false}) }}
+                    </div>
+                </div>
+        {% endif %}
+        {% if kunde is defined and kunde.kId is defined %}
+            <div class="col-xs-5">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Kundenvorgänge</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            {% if kunde.kBestellungen|length > 0 %}
+                            <table class="table no-margin">
+                                <thead>
+                                <tr>
+                                    <th>Art</th>
+                                    <th>Rnnr</th>
+                                    <th>Status</th>
+                                    <th>Summe</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for b in kunde.kBestellungen %}
+                                    <tr>
+                                        <td>{{ b.bArtLabel }}</td>
+                                        <td>{{ b.bRnnr }}</td>
+                                        <td>{{ b.bBezahltLabel }}</td>
+                                        <td>{{ b.bSumme }}</td>
+                                        <td><a href="{{ path('be_vorgaenge_bearbeiten', {'nr': b.Nr}) }}"><i class="fa fa-gear"</a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endif %}
+                        </div><!-- /.table-responsive -->
+                    </div><!-- /.box-body -->
+                    <div class="box-footer clearfix">
+                        <a href="{{ path('be_kunde_vorgang_erstellen', {'kid': kunde.kId } ) }}" class="btn btn-sm btn-info btn-block">Vorgang erstellen</a>
+                    </div><!-- /.box-footer -->
+                </div>
+            </div>
+        {% endif %}
+
+        </div>
+    </section>
+
+
+{% endblock %}

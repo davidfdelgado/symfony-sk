@@ -1,0 +1,66 @@
+<div class="row">
+    <section class=" col-lg-8">
+        <div class="callout callout-info">
+            <h3>Vorgangsnummer überprüfen und einchecken</h3>
+            <div id="check_qr" class="input-group input-group-sm">
+                <input type="text" class="form-control" name="v_nr" placeholder="Vorgangsnummer eintippen">
+                                <span class="input-group-btn">
+                                  <button type="button" class="btn btn-primary"><i class="fa fa-search"></i> prüfen</button>
+                                </span>
+
+            </div><br>
+            <table class="table">
+                <tbody id="context_body">
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+<script type="application/javascript">
+    function check_qr(ele){
+        var search = ele.find('input').val();
+        var content = jQuery('#context_body');
+        content.html('<tr><td align="center"><i class="fa fa-spin fa-spinner"></i></td></tr>');
+
+        jQuery.ajax({
+            url: "{{ path('wg_einchecken_ajax') }}",
+            data: { s : search},
+            dataType: "html"
+        }).done(function(data){
+            content.html(data);
+            jQuery('button[name="kat_checkin"]').bind('click', function(ele){
+                checkin_kat(this);
+            })
+        })
+    }
+
+    function checkin_kat(ele){
+        var nr = jQuery(ele).attr('data-bnr');
+        var kat = jQuery(ele).attr('data-kat');
+        if(nr && kat){
+
+            jQuery.ajax({
+                url: "{{ path('wg_einchecken_kategorie') }}",
+                data: { b : nr, k: kat},
+                dataType: "json"
+            }).done(function(data){
+                if(data.success == true){
+                    jQuery(ele).parent().html('<i class="fa fa-check"></i>');
+                } else {
+                    alert(data.content);
+                }
+            }).fail(function(){
+               alert("Fehler: Bitte probieren Sie es später noch einmal.");
+            });
+        }
+
+        console.log(nr + ' - ' + kat);
+    }
+
+    jQuery(document).ready(function () {
+        var field = jQuery('#check_qr');
+        field.find('button').bind('click', function(){
+            check_qr(field);
+        })
+    })
+</script>

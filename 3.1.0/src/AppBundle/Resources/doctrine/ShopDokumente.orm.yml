@@ -1,0 +1,64 @@
+AppBundle\Entity\ShopDokumente:
+    type: entity
+    table: SHOP_Dokumente
+    indexes:
+        do_bid:
+            columns:
+                - do_bid
+    uniqueConstraints:
+        do_bid_2:
+            columns:
+                - do_bid
+                - do_type
+                - do_path
+    id:
+        doId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: do_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        doType:
+            type: boolean
+            nullable: false
+            column: do_type
+        doStatus:
+            type: boolean
+            nullable: false
+            column: do_status
+        doPath:
+            type: string
+            nullable: false
+            length: 128
+            options:
+                fixed: false
+            column: do_path
+        doLink:
+            type: string
+            nullable: true
+            length: 128
+            options:
+                fixed: false
+            column: do_link
+        doUpdated:
+            type: datetime
+            nullable: false
+            options:
+                default: '0000-00-00 00:00:00'
+            column: do_updated
+    manyToOne:
+        doBid:
+            targetEntity: ShopBestellungen
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                do_bid:
+                    referencedColumnName: nr
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

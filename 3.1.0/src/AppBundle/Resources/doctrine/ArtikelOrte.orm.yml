@@ -1,0 +1,84 @@
+AppBundle\Entity\ArtikelOrte:
+    type: entity
+    table: ARTIKEL_Orte
+    indexes:
+        Shop_Bilder_Zu:
+            columns:
+                - a_o_bzid
+    uniqueConstraints:
+        a_o_name_kurz:
+            columns:
+                - a_o_name_kurz
+    id:
+        aOId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: a_o_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        aOStatus:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: a_o_status
+        aOName:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: a_o_name
+        aONameKurz:
+            type: string
+            nullable: false
+            length: 12
+            options:
+                fixed: false
+            column: a_o_name_kurz
+        aOBewerten:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: a_o_bewerten
+        aOCreated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: a_o_created
+        aOCreatedU:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_o_created_u
+        aOUpdate:
+            type: datetime
+            nullable: false
+            options:
+                default: '0000-00-00 00:00:00'
+            column: a_o_update
+        aOUpdateU:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: a_o_update_u
+    manyToOne:
+        aOBzid:
+            targetEntity: ShopBilderZu
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                a_o_bzid:
+                    referencedColumnName: bz_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

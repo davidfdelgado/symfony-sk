@@ -1,0 +1,47 @@
+{% extends '@AppBundle/base.html.twig' %}
+
+{%  block page_content %}
+
+    <section class="content">
+        <!-- title row -->
+        <div class="row">
+
+            {% if form is defined %}
+            <div class="col-xs-7">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <a href="{{ path('kategorie_arten') }}" class="btn btn-success"> zurück zur Übersicht</a>
+                        <hr>
+                        <h3 class="box-title"> Kategorie-Art</h3>
+                        <small class="pull-right">ID: {{ form.vars.value.getAAId()|default('Neu') }}</small>
+                    </div><!-- /.box-header -->
+                    <!-- form start -->
+                    {{ form_start(form, {'attr': {'class': ''}}) }}
+
+                        <div class="box-body">
+                            {{ form_row(form._token) }}
+                            {{ form_errors(form) }}
+                            {{ form_row(form.aATyp) }}
+                            {{ form_row(form.aAOverview) }}
+                            {{ form_row(form.aABeschreibung) }}
+                            <hr>
+                            <h4>Style-Definitionen</h4>
+                            {{ form_row(form.aACssClass) }}
+                            {{ form_row(form.aAIcon) }}
+                            {{ form_row(form.aAGoogleMarkerImage) }}
+
+                        </div>
+                        <div class="box-footer">
+                            {{ form_widget(form.save) }}
+                            {{ form_widget(form.abort) }}
+                        </div>
+                     {{ form_end(form, {'render_rest': false}) }}
+                    </div>
+                </div>
+        {% endif %}
+
+        </div>
+    </section>
+
+
+{% endblock %}

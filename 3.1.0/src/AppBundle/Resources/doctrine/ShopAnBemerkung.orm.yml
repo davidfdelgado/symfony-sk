@@ -1,0 +1,41 @@
+AppBundle\Entity\ShopAnBemerkung:
+    type: entity
+    table: SHOP_AN_Bemerkung
+    indexes:
+        o_bid:
+            columns:
+                - o_bid
+    id:
+        oId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: o_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        oArt:
+            type: boolean
+            nullable: false
+            column: o_art
+        oText:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: o_text
+    manyToOne:
+        oBid:
+            targetEntity: ShopBestellungen
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                o_bid:
+                    referencedColumnName: nr
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

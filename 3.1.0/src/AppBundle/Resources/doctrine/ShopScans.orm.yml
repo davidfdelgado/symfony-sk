@@ -1,0 +1,73 @@
+AppBundle\Entity\ShopScans:
+    type: entity
+    table: SHOP_Scans
+    indexes:
+        sc_p_id:
+            columns:
+                - sc_b_nr
+        sc_au_id:
+            columns:
+                - sc_au_id
+        sc_k_id:
+            columns:
+                - sc_k_id
+    uniqueConstraints:
+        sc_b_nr:
+            columns:
+                - sc_b_nr
+                - sc_k_id
+    id:
+        scId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: sc_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        scAnzahl:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: sc_anzahl
+        scScanned:
+            type: datetime
+            nullable: true
+            options:
+                default: CURRENT_TIMESTAMP
+            column: sc_scanned
+    manyToOne:
+        scAu:
+            targetEntity: AgenturUser
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                sc_au_id:
+                    referencedColumnName: au_id
+            orphanRemoval: false
+        scBNr:
+            targetEntity: ShopBestellungen
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                sc_b_nr:
+                    referencedColumnName: nr
+            orphanRemoval: false
+        scK:
+            targetEntity: ArtikelKategorie
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                sc_k_id:
+                    referencedColumnName: a_k_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

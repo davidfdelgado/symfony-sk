@@ -1,0 +1,43 @@
+{% extends '@AppBundle/base.html.twig' %}
+
+{%  block page_content %}
+    <div class="row">
+        <section class="col-lg-12">
+            <div class="box box-primary">
+                <div class="box-header ui-sortable-handle">
+                        <a href="{{ path('kategorie_arten_erstellen') }}" class="btn btn-primary pull-right">
+                            Neue Kategorie-Art erstellen
+                        </a>
+                    </div>
+                <div class="box-body">
+                    <table class="table" id="datatable" >
+                        <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Übersicht</th>
+                            <th>Bezeichnung</th>
+                            <th>HintergrungFarbe</th>
+                            <th>Icon</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for art in arten %}
+                                <tr>
+                                    <td>{{ art.getAAId() }}</td>
+                                    <td>{{ art.getAATyp() }}</td>
+                                    <td>{{ art.getAABeschreibung() }}</td>
+                                    <td>{{ art.getAACssClass() }}</td>
+                                    <td><i class="fa {{ art.getAAIcon() }} fa-2x"></i></td>
+                                    <td><a href="{{ path('kategorie_arten_bearbeiten', {'aaid': art.getAAId() }) }}"><i class="fa fa-gear"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+

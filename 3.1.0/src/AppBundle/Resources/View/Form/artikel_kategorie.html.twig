@@ -1,0 +1,247 @@
+{% extends '@AppBundle/base.html.twig' %}
+
+{% form_theme form '@AppBundle/form.html.twig'%}
+
+{%  block page_content %}
+
+    <section class="content">
+        <!-- title row -->
+        <div class="row">
+        {% if form is defined %}
+            <div class="col-sm-12">
+                <div class="box box-primary">
+                    {{ form_start(form) }}
+                    <div class="box-header with-border">
+                        <a href="{{ path('artikel_kategorien', {'aoid': 1}) }}" class="btn btn-success"> zurück zur Übersicht</a>
+                        <hr>
+                        <h3 class="box-title"> Kategorie - {{ form.vars.value.getAKName()|default("NEU") }}</h3>
+                        <small class="pull-right">ID: {{ form.vars.value.getAKId()|default('Neu') }}</small>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-md-12">
+                            {{ form_errors(form) }}
+                            {{ form_row(form._token) }}
+
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#allgemein" data-toggle="tab" aria-expanded="false">Allgemeines</a></li>
+                                    <li class=""><a href="#zeiten" data-toggle="tab" aria-expanded="false">Zeiten</a></li>
+                                    <li class=""><a href="#darstellung" data-toggle="tab" aria-expanded="false">Darstellung (Seite)</a></li>
+                                    <li class=""><a href="#abwicklung" data-toggle="tab" aria-expanded="false">Abwicklung</a></li>
+                                    <li class=""><a href="#angebot" data-toggle="tab" aria-expanded="false">Angebot</a></li>
+                                    <li class=""><a href="#voucher" data-toggle="tab" aria-expanded="false">Voucher</a></li>
+                                    <li class=""><a href="#vertrieb" data-toggle="tab" aria-expanded="false">Vertrieb</a></li>
+                                    <li class=""><a href="#buchhaltung" data-toggle="tab" aria-expanded="true">Buchhaltung</a></li>
+                                    <li class=""><a href="#points" data-toggle="tab" aria-expanded="true">Points ({{ form.aKPoints|length }})</a></li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="allgemein">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h3>Allgemeines</h3>
+                                                <hr>
+                                                {{ form_row(form.aKAktiv) }}
+                                                {{ form_row(form.aKNameKurz) }}
+                                                {{ form_row(form.aKArt) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="darstellung">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h3>Darstellungs-Infos</h3>
+                                                <hr>
+                                                {{ form_row(form.aKName) }}
+                                                {{ form_row(form.aKBeschreibung) }}
+                                                {{ form_row(form.aKUeberschrift) }}
+                                                <hr>
+                                                {{ form_row(form.aKNameEn) }}
+                                                {{ form_row(form.aKUeberschriftEn) }}
+                                                {{ form_row(form.aKBeschreibungEn) }}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="zeiten">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h3>Datum + Zeiten</h3>
+                                                <hr>
+                                                {{ form_row(form.aKTime) }}
+                                                {{ form_row(form.aKTimeMinDate) }}
+                                                {{ form_row(form.aKDauer) }}
+
+                                                <div class="nav-tabs-custom" {% if form.aKTime.vars.value == 8 %}style="display: none"{% endif %}>
+                                                    <ul class="nav nav-tabs">
+                                                        <li class="active"><a href="#zeiten_einzelne" data-toggle="tab" aria-expanded="false">Einzelne Zeiten ({{ form.aKZeiten|default(null)|length }})</a></li>
+                                                        <li class=""><a href="#zeiten_tabelle" data-toggle="tab" aria-expanded="false">Zeiten-Tabelle ({{ form.aKZeitenTabelle|default(null)|length }})</a></li>
+                                                        <li class=""><a href="#zeiten_darstellen" data-toggle="tab" aria-expanded="false">Zeiten darstellen</a></li>
+                                                    </ul>
+
+                                                    <div class="tab-content">
+                                                        <div class="tab-pane active" id="zeiten_einzelne">
+
+                                                            <hr>
+
+                                                            <div class="collection" data-prototype="{% filter escape %}{% include '@AppBundle/form/artikel_ab_zeiten_prototype.html.twig' with { 'item': form.aKZeiten.vars.prototype } %}{% endfilter %}" id="ABZeiten">
+                                                                {% for item in form.aKZeiten %}
+                                                                    {% include '@AppBundle/form/artikel_ab_zeiten_prototype.html.twig' %}
+                                                                {% endfor %}
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="tab-pane" id="zeiten_tabelle">
+
+
+                                                        </div>
+                                                        <div class="tab-pane" id="zeiten_darstellen">
+
+                                                            <hr>
+
+                                                            {% if form.vars.value.aKId is defined and form.vars.value.aKId %}
+                                                                {{ render(controller('AppBundle:Widget:zeiten', {'a_k_id': form.vars.value.aKid})) }}
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="angebot">
+                                        <hr>
+                                        {{ form_row(form.aKRtext) }}
+                                        {% if form.vars.value.aKVtext is defined and form.vars.value.aKVtext %}
+                                            <hr>
+                                            <dl class="dl-horizontal">
+                                                <dt></dt>
+                                                <dd><a href="{{ path('shop_bausteine_bearbeiten', {'hid': form.vars.value.aKRtext.hId }) }}"><i class="fa fa-gear"></i> Baustein bearbeiten</a></dd>
+                                                <hr>
+                                                <dt>Inhalt</dt>
+                                                <dd class="well">{{ form.vars.value.aKRtext.hText|raw }}</dd>
+                                                <hr>
+                                                <dt>Inhalt (eng)</dt>
+                                                <dd class="well">{{ form.vars.value.aKRtext.hTextEn|raw }}</dd>
+                                            </dl>
+                                        {% endif %}
+
+                                    </div>
+                                    <div class="tab-pane" id="voucher">
+                                        <hr>
+                                        {{ form_row(form.aKVoucher) }}
+
+                                        <hr>
+                                        <div id="checkVoucher">
+
+                                        {{ form_row(form.aKDruck) }}
+                                        {{ form_row(form.aKVtext) }}
+                                        {% if form.vars.value.aKVtext is defined and form.vars.value.aKVtext %}
+                                            <hr>
+                                            <dl class="dl-horizontal">
+                                                <dt></dt>
+                                                <dd><a href="{{ path('shop_bausteine_bearbeiten', {'hid': form.vars.value.aKVtext.hId }) }}"><i class="fa fa-gear"></i> Baustein bearbeiten</a></dd>
+                                                <hr>
+                                                <dt>Inhalt</dt>
+                                                <dd class="well">{{ form.vars.value.aKVtext.hText|raw }}</dd>
+                                                <hr>
+                                                <dt>Inhalt (eng)</dt>
+                                                <dd class="well">{{ form.vars.value.aKVtext.hTextEn|raw }}</dd>
+                                            </dl>
+                                        {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="abwicklung">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h3>Abwicklung</h3>
+                                                <hr>
+                                                {{ form_row(form.aKEinbuchen) }}
+                                                {{ form_row(form.aKBewerten) }}
+                                                {{ form_row(form.aKAnsicht) }}
+                                            </div>
+                                        </div>
+                                    </div><!-- /.tab-pane -->
+                                    <div class="tab-pane" id="vertrieb">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h3>Vertrieb</h3>
+                                                <hr>
+                                                {{ form_row(form.aKVertrieb) }}
+                                            </div>
+                                        </div>
+                                    </div><!-- /.tab-pane -->
+
+                                    <div class="tab-pane" id="buchhaltung">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h3>Buchhaltung</h3>
+                                                <hr>
+                                                {{ form_row(form.aKMwst) }}
+                                                {{ form_row(form.aKKonto) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="points">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h3>Points</h3>
+                                                <hr>
+                                                <div class="collection" data-prototype="{% filter escape %}{% include '@AppBundle/form/artikel_kategorie_leistungen_prototype.html.twig' with { 'item': form.aKPoints.vars.prototype } %}{% endfilter %}" id="po">
+                                                    {% for item in form.aKPoints %}
+                                                        {% include '@AppBundle/form/artikel_kategorie_leistungen_prototype.html.twig' %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- /.tab-content -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+
+                        {{ form_widget(form.save) }}
+                        {{ form_widget(form.abort) }}
+                    </div>
+                    {{ form_end(form, {'render_rest' : false}) }}
+                </div>
+            </div>
+        {% endif %}
+        </div>
+    </section>
+
+
+{% endblock %}
+
+{% block javascripts_head %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/collection_add.js') }}"></script>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="application/javascript">
+        function checkVoucher() {
+            var c = jQuery('.checkVoucher').eq(0);
+            if(c.is('*')){
+                var cv = c.val();
+                if(cv == 1){
+                    jQuery('#checkVoucher').slideDown('slow');
+                } else {
+                    jQuery('#checkVoucher').slideUp('slow');
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+        jQuery(document).ready(function () {
+            jQuery('.checkVoucher').bind('change', function () {
+                checkVoucher();
+            });
+
+        })
+    </script>
+{% endblock %}

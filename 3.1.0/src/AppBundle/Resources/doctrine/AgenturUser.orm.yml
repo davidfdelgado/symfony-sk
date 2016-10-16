@@ -1,0 +1,98 @@
+AppBundle\Entity\AgenturUser:
+    type: entity
+    table: AGENTUR_User
+    id:
+        auId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: au_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        auArt:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: au_art
+        auTyp:
+            type: boolean
+            nullable: false
+            options:
+                comment: 'für interne mitarbeiter zu welcher kategorie er gehört'
+                default: '0'
+            column: au_typ
+        auBn:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: au_bn
+        auPw:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: au_pw
+        auLastlogin:
+            type: datetime
+            nullable: true
+            column: au_lastlogin
+        auVorname:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: au_vorname
+        auNachname:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: au_nachname
+        auVid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: au_vid
+        auCreated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: au_created
+        auStatus:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: au_status
+        auEmail:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: au_email
+        auTelefon:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: au_telefon
+        auScanAll:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: au_scan_all
+    lifecycleCallbacks: {  }

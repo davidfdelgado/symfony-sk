@@ -1,0 +1,93 @@
+AppBundle\Entity\ArtikelKategorieBewertungen:
+    type: entity
+    table: ARTIKEL_Kategorie_Bewertungen
+    indexes:
+        bw_kid:
+            columns:
+                - bw_kid
+        bw_user:
+            columns:
+                - bw_user
+        bw_bid:
+            columns:
+                - bw_bid
+    uniqueConstraints:
+        bw_bid_2:
+            columns:
+                - bw_bid
+                - bw_kid
+    id:
+        bwId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: bw_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        bwStatus:
+            type: boolean
+            nullable: false
+            options:
+                comment: '0 = inaktiv, 1 = aktiv '
+            column: bw_status
+        bwSterne:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: bw_sterne
+        bwCreated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: bw_created
+        bwBewertungName:
+            type: string
+            nullable: false
+            length: 128
+            options:
+                fixed: false
+            column: bw_bewertung_name
+        bwBewertungText:
+            type: string
+            nullable: false
+            length: 1024
+            options:
+                fixed: false
+            column: bw_bewertung_text
+    manyToOne:
+        bwKid:
+            targetEntity: ArtikelKategorie
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                bw_kid:
+                    referencedColumnName: a_k_id
+            orphanRemoval: false
+        bwUser:
+            targetEntity: AgenturUser
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                bw_user:
+                    referencedColumnName: au_id
+            orphanRemoval: false
+        bwBid:
+            targetEntity: ShopBestellungen
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                bw_bid:
+                    referencedColumnName: nr
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

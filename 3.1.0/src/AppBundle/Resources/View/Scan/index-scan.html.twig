@@ -1,0 +1,56 @@
+{% extends '@AppBundle/Scan/base-scan.html.twig' %}
+
+
+{% block page_content %}
+
+    {% if vorgang is defined %}
+
+        {% if vorgang %}
+            {% for kategorie in vorgang.getBKategorien() %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{{ path('sc_checkin', {'nr': vorgang.getNr(), 'kat': kategorie.getAKId(), 'datum': kategorie.checkin_datum is empty ? "" : kategorie.checkin_datum|date('Y-m-d') }) }}">
+                        <div class="box box-solid bg-teal disabled">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{{ kategorie.aKName }}</h3>
+                                <div class="box-tool pull-right">
+                                    {{ kategorie.aKAnbieterId.avHotelname }}
+                                </div>
+                            </div><!-- /.box-header -->
+                            <div class="box-body">
+                                {% if kategorie.checkin_datum %}
+                                    <p><i class="fa fa-calendar-o"></i> Gültig am {{ kategorie.checkin_datum|date('d.m.Y') }}</p>
+                                {% else %}
+                                    <p><i class="fa fa-calendar-o"></i>Gültig ab {{ vorgang.getBDatum()|date('d.m.Y') }}</p>
+                                {% endif %}
+                                <blockquote>
+                                    {% for p in kategorie.checkin_positionen %}
+                                        <p>{{ p.pBezeichnung|replace({' (': "", ')': "", (kategorie.aKName) : ""}) }} x {{ p.pAnzahl }}</p>
+                                    {% endfor %}
+                                </blockquote>
+                                {% if kategorie.scan %}
+                                    <p><i class="fa fa-user"></i> bereits eingescannt am {{ kategorie.scan.getScScanned()|date('d.m.Y H:i') }} von {{ kategorie.scan.getScAu().getAuVorname() ~ ' ' ~ kategorie.scan.getScAu().getAuNachname() }}</p>
+                                {% endif %}
+                            </div><!-- /.box-body -->
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+            <center>
+                <a href="#" onclick="jQuery('#form').slideToggle()">[ Formular einblenden-/ausblenden]</a>
+            </center>
+        {% else %}
+
+        {% endif %}
+        <div class="row">
+            <hr>
+            <div class="col-sm-12" id="form" {% if vorgang %}style="display: none;"{% endif %}>
+                {{ form_start(form, {'attr' : {'id' : 'vg-check'}}) }}
+                        {{ form_row(form.rn) }}
+                        {{ form_row(form.check) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

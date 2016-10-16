@@ -1,0 +1,35 @@
+AppBundle\Entity\ArtikelKategorieArt:
+    type: entity
+    table: ARTIKEL_Kategorie_Art
+    id:
+        aAId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: a_a_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        aATyp:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: a_a_typ
+        aABeschreibung:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: a_a_beschreibung
+        aAGoogleMarkerImage:
+            type: string
+            nullable: true
+            length: 128
+            options:
+                fixed: false
+            column: a_a_google_marker_image
+    lifecycleCallbacks: {  }

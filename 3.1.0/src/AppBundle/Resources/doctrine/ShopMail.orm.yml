@@ -1,0 +1,55 @@
+AppBundle\Entity\ShopMail:
+    type: entity
+    table: SHOP_Mail
+    id:
+        mId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: m_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        mRnnr:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: m_rnnr
+        mTo:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: m_to
+        mBetreff:
+            type: string
+            nullable: false
+            length: 48
+            options:
+                fixed: false
+            column: m_betreff
+        mCreated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: m_created
+        mUser:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: m_user
+        mSession:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: m_session
+    lifecycleCallbacks: {  }

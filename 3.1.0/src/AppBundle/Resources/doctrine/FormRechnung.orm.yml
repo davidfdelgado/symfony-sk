@@ -1,0 +1,201 @@
+AppBundle\Entity\FormRechnung:
+    type: entity
+    table: FORM_Rechnung
+    uniqueConstraints:
+        fo_type:
+            columns:
+                - fo_type
+                - fo_lang
+    id:
+        foId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: fo_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        foType:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: fo_type
+        foLang:
+            type: string
+            nullable: false
+            length: 8
+            options:
+                fixed: false
+            column: fo_lang
+        foHeader:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: fo_header
+        foFooter:
+            type: string
+            nullable: true
+            length: 64
+            options:
+                fixed: false
+            column: fo_footer
+        foFo11:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fo_1_1
+        foFo12:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fo_1_2
+        foFo13:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fo_1_3
+        foFo14:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fo_1_4
+        foFo21:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fo_2_1
+        foFo22:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fo_2_2
+        foFo23:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fo_2_3
+        foFo24:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fo_2_4
+        foFo31:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fo_3_1
+        foFo32:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fo_3_2
+        foFo33:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fo_3_3
+        foFo34:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fo_3_4
+        foFo41:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fo_4_1
+        foFo42:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fo_4_2
+        foFo43:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fo_4_3
+        foFo44:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fo_4_4
+        foEmail:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_email
+        foCompany:
+            type: string
+            nullable: true
+            length: 64
+            options:
+                fixed: false
+            column: fo_company
+        foAddr1:
+            type: string
+            nullable: true
+            length: 64
+            options:
+                fixed: false
+            column: fo_addr_1
+        foAddr2:
+            type: string
+            nullable: true
+            length: 64
+            options:
+                fixed: false
+            column: fo_addr_2
+        foTel:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_tel
+        foFax:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: fo_fax
+    lifecycleCallbacks: {  }

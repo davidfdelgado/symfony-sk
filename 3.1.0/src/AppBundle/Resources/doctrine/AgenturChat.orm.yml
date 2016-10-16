@@ -1,0 +1,82 @@
+AppBundle\Entity\AgenturChat:
+    type: entity
+    table: AGENTUR_Chat
+    indexes:
+        ac_bid:
+            columns:
+                - ac_bid
+        IDX_FECC6DAF1CD0C3AD:
+            columns:
+                - ac_from
+    uniqueConstraints:
+        ac_from:
+            columns:
+                - ac_from
+                - ac_to
+                - ac_message
+    id:
+        acId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: ac_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        acTyp:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '1'
+            column: ac_typ
+        acStatus:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '1'
+            column: ac_status
+        acTo:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: ac_to
+        acMessage:
+            type: string
+            nullable: false
+            length: 512
+            options:
+                fixed: false
+            column: ac_message
+        acCreated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: ac_created
+    manyToOne:
+        acFrom:
+            targetEntity: AgenturUser
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                ac_from:
+                    referencedColumnName: au_id
+            orphanRemoval: false
+        acBid:
+            targetEntity: AgenturChatBetreff
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                ac_bid:
+                    referencedColumnName: ab_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,75 @@
+AppBundle\Entity\ArtikelAbZeiten:
+    type: entity
+    table: ARTIKEL_AB_Zeiten
+    indexes:
+        a_ab_ak_id:
+            columns:
+                - a_ab_kid
+        a_ab_kid:
+            columns:
+                - a_ab_kid
+    id:
+        aAbId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: a_ab_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        aAbTyp:
+            type: boolean
+            nullable: true
+            options:
+                default: '1'
+            column: a_ab_typ
+        aAbDatum:
+            type: datetime
+            nullable: false
+            column: a_ab_datum
+        aAbInterval:
+            type: time
+            nullable: false
+            options:
+                comment: 'interval in Minuten'
+                default: '00:00:15'
+            column: a_ab_interval
+        aAbIntStart:
+            type: time
+            nullable: false
+            options:
+                comment: 'start des intervales'
+            column: a_ab_int_start
+        aAbIntEnde:
+            type: time
+            nullable: false
+            options:
+                comment: 'Ende des Intervales'
+            column: a_ab_int_ende
+        aAbInfo:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: a_ab_info
+        aAbStatus:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: a_ab_status
+    manyToOne:
+        aAbKid:
+            targetEntity: ArtikelKategorie
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                a_ab_kid:
+                    referencedColumnName: a_k_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

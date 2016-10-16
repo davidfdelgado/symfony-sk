@@ -1,0 +1,70 @@
+AppBundle\Entity\AgenturProvisionsTabelle:
+    type: entity
+    table: AGENTUR_Provisions_Tabelle
+    indexes:
+        ap_au_id:
+            columns:
+                - ap_av_id
+                - ap_ak_id
+        ap_ak_id:
+            columns:
+                - ap_ak_id
+        IDX_F0A176361BD5A8DA:
+            columns:
+                - ap_av_id
+    uniqueConstraints:
+        'Kategorie pro AG':
+            columns:
+                - ap_av_id
+                - ap_ak_id
+    id:
+        apId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: ap_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        apProvA:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 3
+            options:
+                comment: 'Prov für direktverkauf in %'
+                default: '0.000'
+            column: ap_prov_a
+        apProvB:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            options:
+                comment: 'Provision für affiliate verkauf'
+                default: '0.00'
+            column: ap_prov_b
+    manyToOne:
+        apAv:
+            targetEntity: AgenturVertrieb
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                ap_av_id:
+                    referencedColumnName: av_id
+            orphanRemoval: false
+        apAk:
+            targetEntity: ArtikelKategorie
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                ap_ak_id:
+                    referencedColumnName: a_k_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

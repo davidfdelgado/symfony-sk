@@ -1,0 +1,39 @@
+{% extends '@AppBundle/base.html.twig' %}
+
+{% if error_code is defined %}
+    {% if error_code == 405 %}
+        {% set page_title = 'Zugriff verweigert' %}
+        {% set page_subtitle = error_code %}
+        {% set title = page_subtitle ~ ' - ' ~ page_title  %}
+    {% endif %}
+{% endif %}
+
+{% block page_content %}
+    <section class="content">
+        <div class="error-page">
+            <h2 class="headline text-red">{{ error_code|default(200) }}</h2>
+            <div class="error-content">
+                {% if error_code is defined %}
+
+                    {% if error_code == 405 %}
+
+                        <h3><i class="fa fa-warning text-red"></i> Ohoh! Hier passiert wohl etwas geheimes...</h3>
+                        <p>
+                            Hallo {{ app.user.auVorname|default('Du') }},<br>
+                            dieser Bereich ist leider nicht Zugänglich für Dich. Sollte dies ein Irrtum sein, wende dich bitte an deinen Admin oder deinem Ansprechpartner aus unserem Vertriebsteam.
+                        </p>
+                    {% elseif error_code == 404 %}
+                        <h3><i class="fa fa-warning text-red"></i> Oops! Something went wrong.</h3>
+                        <p>
+                            We will work on fixing that right away.
+                            Meanwhile, you may <a href="../../index.html">return to dashboard</a> or try using the search form.
+                        </p>
+
+                    {% endif %}
+
+                {% endif %}
+            </div>
+        </div><!-- /.error-page -->
+
+    </section>
+{% endblock %}

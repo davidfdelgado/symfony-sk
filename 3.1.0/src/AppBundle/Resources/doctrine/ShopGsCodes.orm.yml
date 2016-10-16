@@ -1,0 +1,73 @@
+AppBundle\Entity\ShopGsCodes:
+    type: entity
+    table: SHOP_GS_Codes
+    indexes:
+        gs_n_fid:
+            columns:
+                - gs_n_fid
+        gs_n_fid_2:
+            columns:
+                - gs_n_fid
+    uniqueConstraints:
+        gs_n_code:
+            columns:
+                - gs_n_code
+    id:
+        gsNId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: gs_n_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        gsNStatus:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: gs_n_status
+        gsNTyp:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: gs_n_typ
+        gsNCode:
+            type: string
+            nullable: false
+            length: 16
+            options:
+                fixed: false
+            column: gs_n_code
+        gsNBeschreibung:
+            type: string
+            nullable: false
+            length: 128
+            options:
+                fixed: false
+            column: gs_n_beschreibung
+        gsNCreated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: gs_n_created
+        gsNGueltigBis:
+            type: datetime
+            nullable: false
+            column: gs_n_gueltig_bis
+    manyToOne:
+        gsNFid:
+            targetEntity: ShopGsFunktion
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                gs_n_fid:
+                    referencedColumnName: gs_f_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

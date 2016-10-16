@@ -1,0 +1,19 @@
+{% if item is defined %}
+    <div class="row">
+        <div class="col-sm-1">
+            {% if item.vars.value.aklKl is defined %}
+            <i class="fa fa-2x {{ item.vars.value.aklKl.klClass }}"></i>
+            {% endif %}
+        </div>
+        <div class="col-sm-6">
+            {{ form_row( item.aklBezeichnung, {'attr': {'placeholder': item.vars.value.aklKl.klBeschreibung|default('') }} ) }}
+        </div>
+        <div class="col-sm-4">
+            {{ form_row(item.aklKl) }}
+        </div>
+        <div class="col-sm-1 col-del">
+
+        </div>
+    </div>
+
+{% endif %}

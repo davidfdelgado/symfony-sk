@@ -1,0 +1,64 @@
+{% if warenkorb is defined %}
+    {% set summe = 0 %}
+    {% set max = 20 %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Bezeichnung</th>
+            <th>Datum</th>
+            <th>Menge</th>
+            <th>Preis</th>
+            <th>Summe</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for leistung in warenkorb.sWarenkorb if warenkorb.sWarenkorb|length > 0 %}
+            {% set summe = summe + ( leistung.wcPreis * leistung.wcMenge ) %}
+            <tr class="tk" data-wcid="{{ leistung.wcId }}">
+                <td>
+                    {{ leistung.wcName|replace({' (': ' ('})|raw }}
+                </td>
+                <td>
+                    {% if leistung.wcDatum %}
+                        <small>
+                            <i class="fa fa-calendar-o"></i> {{ leistung.wcDatum|date('d.m.Y') }}
+                            {% if leistung.wcDatum|date('H:i') != "00:00" %}
+                                <i class="fa fa-clock-o"></i> {{ leistung.wcDatum|date('H:i') }}
+                            {% endif %}
+                        </small>
+                    {% endif %}
+                </td>
+                <td>
+                    <input type="text" name="ti_anzahl" class="ti_anzahl" value="{{ leistung.wcMenge }}" style="width:40px" readonly="readonly">
+                </td>
+                <td align="right">
+                    € {{  leistung.wcPreis|number_format(2, ',', '.') }}
+                </td>
+                <td align="right">
+                    € {{ (leistung.wcPreis * leistung.wcMenge)|number_format(2, ',', '.') }}
+                </td>
+                <td>
+                    <button type="button" class="btn btn-xs btn-error pull-right minus {% if leistung.wcMenge == 1 %}uncl{% endif %}" onclick="wc_cartcha(this)" value="-"><i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-xs btn-error pull-right plus {% if leistung.wcMenge == max %}uncl{% endif %}"  onclick="wc_cartcha(this)" value="+"><i class="fa fa-plus"></i></button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-xs btn-error pull-right" onclick="wc_cartdel(this)"><i class="fa fa-trash"></i></button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Summe</th>
+                <td align="right" style="border-bottom: 3px double #333;">€ {{ summe|number_format(2, '.', ',') }}</td>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+{% endif %}

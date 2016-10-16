@@ -1,0 +1,58 @@
+AppBundle\Entity\AgenturChatBetreff:
+    type: entity
+    table: AGENTUR_Chat_Betreff
+    indexes:
+        ab_uid:
+            columns:
+                - ab_from
+    uniqueConstraints:
+        ab_typ:
+            columns:
+                - ab_typ
+                - ab_betreff
+                - ab_from
+                - ab_to
+    id:
+        abId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: ab_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        abTyp:
+            type: boolean
+            nullable: false
+            options:
+                comment: 'ob es vom vertriebspartner stammt oder nicht '
+                default: '0'
+            column: ab_typ
+        abCreated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: ab_created
+        abBetreff:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: ab_betreff
+        abFrom:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: ab_from
+        abTo:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: ab_to
+    lifecycleCallbacks: {  }

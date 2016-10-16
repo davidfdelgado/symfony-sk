@@ -1,0 +1,65 @@
+AppBundle\Entity\ShopPassbook:
+    type: entity
+    table: SHOP_Passbook
+    id:
+        paId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: pa_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        paCity:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: pa_city
+        paName:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: pa_name
+        paPassType:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: pa_pass_type
+        paTimeTrue:
+            type: boolean
+            nullable: false
+            column: pa_time_true
+        paTime:
+            type: time
+            nullable: false
+            column: pa_time
+        paOrganizationName:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: pa_organization_name
+        paDescription:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: pa_description
+        paCategory:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: pa_category
+    lifecycleCallbacks: {  }

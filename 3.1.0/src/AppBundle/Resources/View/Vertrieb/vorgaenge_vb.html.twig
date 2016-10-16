@@ -1,0 +1,118 @@
+{% extends '@AppBundle/base.html.twig' %}
+
+
+{% macro display_vorgaenge(v) %}
+
+    {%  if v.count() %}
+    <table class="table table-hover noStornos">
+        <thead>
+            {% if v.summe is defined %}
+                <tr>
+                    <td colspan="2">
+                        Generierter Umsatz:
+                    </td>
+                    <td align="right">
+                        € {{ v.summe|number_format(2, ',', '.') }}
+                    </td>
+                </tr>
+            {% endif %}
+            <tr>
+                <th>Vorgangsnummer</th>
+                <th>Datum</th>
+                <th align="right" style="text-align: right">Summe</th>
+                <th>Benutzer</th>
+                <th>Referenz</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vorgang in v %}
+            <tr class="{% if vorgang.getBArt() >= 90 %}storno{% endif %}">
+                <td>{{ vorgang.getBRnnr() }}</td>
+                <td>{{ vorgang.getBCreated()|date('d.m.Y H:i') }}</td>
+                <td align="right">€ {{ vorgang.getBSumme()|number_format(2, ',', '.') }}</td>
+                <td>{{ vorgang.getBUser().getAuVorname() ~ ' ' ~ vorgang.getBUser().getAuNachname() }}</td>
+                <td><i>{{ vorgang.getBRef() }}</i></td>
+                <td>{% if vorgang.getBArt() == 4 %}<a href="{{ path('vb_ticket_bearbeiten', {'nr': vorgang.getNr() } ) }}" class=""><i class="fa fa-gear"></i> </a>{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Es liegen keine Vorgänge vor.</p>
+    {% endif %}
+
+{% endmacro %}
+
+{% block page_content %}
+    <div class="row">
+        <section class="col-lg-8">
+            <div class="box box-primary" style="position: relative;">
+                <div class="box-header ui-sortable-handle" style="cursor: move;">
+                    <i class="fa fa-info"></i>
+                    <h3 class="box-title">Übersicht aller getätigten Vorgänge</h3>
+                    <div class="box-tools pull-right">
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <p>In dieser Übersichtplattform können Sie Ihre Buchungszahlen verfolgen. Es wird Ihnen die Vorgangsnummer angezeigt, das Datum, Die Summe, wann der Vorgang erstellt wurde und von Wem. Somit können Sie immer nachvollziehen, bei welchen Buchungszahlen und Umsätzen Ihr Hotel/Agentur liegt.</p>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs">
+                                    <li><a href="#all" data-toggle="tab">Alle ({{ vorgaenge.count() }})</a></li>
+                                    <li class="active" ><a href="#today" data-toggle="tab">Heute ({{ vorgaenge.today.count() }})</a></li>
+                                    <li><a href="#month" data-toggle="tab">Diesen Monat ({{ vorgaenge.month.count() }})</a></li>
+                                    <li><a href="#year" data-toggle="tab">Dieses Jahr ({{ vorgaenge.year|length }})</a></li>
+                                    <li class="pull-right"><label>inkl. Stonos <input onchange="jQuery('.table').toggleClass('noStornos')" type="checkbox" class="" name="showStorno" value="true" /></label></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane" id="all">
+                                        {{ _self.display_vorgaenge(vorgaenge) }}
+                                    </div>
+                                    {% if vorgaenge.today is defined %}
+                                    <div class="tab-pane active" id="today">
+                                        {{ _self.display_vorgaenge(vorgaenge.today) }}
+                                    </div>
+                                    {% endif %}
+                                    {% if vorgaenge.month is defined %}
+                                    <div class="tab-pane" id="month">
+                                        {{ _self.display_vorgaenge(vorgaenge.month) }}
+                                    </div>
+                                    {% endif %}
+                                    {% if vorgaenge.year is defined %}
+                                    <div class="tab-pane" id="year">
+                                        {{ _self.display_vorgaenge(vorgaenge.year) }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer clearfix no-border">
+                </div>
+            </div>
+        </section>
+        {% if abfrage is defined %}
+        <div class="col-sm-4">
+            {{ form_start(form) }}
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <p>
+                        {{ form_row(form.users) }}
+                        {{ form_row(form.monate) }}
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                    {{ form_widget(form.aktuallisieren) }}
+            </div>
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

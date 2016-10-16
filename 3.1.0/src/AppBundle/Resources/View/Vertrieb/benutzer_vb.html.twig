@@ -1,0 +1,67 @@
+{% extends '@AppBundle/base.html.twig' %}
+
+{% block page_content %}
+    <div class="row">
+        <section class="col-lg-8">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <i class="fa fa-users"></i>
+                    <h1 class="box-title">Benutzerübersicht</h1>
+
+                    <div class="box-tool pull-right">
+                        <a href="{{ path('vb_benutzer_erstellen') }}" class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> Benutzer hinzufügen</a>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <p>Auf der Benutzerübersicht können Sie als Administrator weitere Benutzer hinzufügen oder entfernen. Um einen neuen Benutzer hinzuzufügen, klicken Sie bitte auf „Benutzer hinzufügen“. Dieser wird daraufhin in die Benutzerliste aufgenommen und Sie können kontrollieren wann dieser zuletzt Online gewesen ist. Ebenso haben Sie die Möglichkeit die Benutzer auf dem " - " jederzeit zu löschen.</p>
+                    {% if vb is defined and vb.avUsers|length > 0 %}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Art</th>
+                                    <th>Vorname</th>
+                                    <th>Nachname</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in vb.avUsers %}
+                                {% if wechsel is defined and user.auStatusLabel != wechsel %}
+                                    <tr>
+                                        <th colspan="6">
+                                            {% if user.auStatusLabel == "inaktiv" %}
+                                                <h2>inaktive Accounts</h2>
+                                                {% endif %}
+                                            <hr>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Art</th>
+                                        <th>Vorname</th>
+                                        <th>Nachname</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                    </tr>
+                                {% endif %}
+                                <tr>
+                                    <td>{{ user.auId }}</td>
+                                    <td>{{ user.auArtLabel }}{% if app.user.auId == user.auId %} (Sie){% endif %}</td>
+                                    <td>{{ user.auVorname }}</td>
+                                    <td>{{ user.auNachname }}</td>
+                                    <td>{{ user.auStatusLabel }}</td>
+                                    <td><a href="{{ path('vb_benutzer_bearbeiten', {'auid' : user.auId()}) }}" class="btn btn-xs btn-primary pull-right" ><i class="fa fa-gear"></i> bearbeiten</a></td>
+                                    {% set wechsel = user.auStatusLabel %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div><!-- /.box-body -->
+            </div>
+        </section>
+    </div>
+{% endblock %}

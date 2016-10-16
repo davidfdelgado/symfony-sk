@@ -1,0 +1,46 @@
+AppBundle\Entity\ShopBilder:
+    type: entity
+    table: SHOP_Bilder
+    id:
+        biId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: bi_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        biPath:
+            type: string
+            nullable: true
+            length: 128
+            options:
+                fixed: false
+            column: bi_path
+        biAlt:
+            type: string
+            nullable: true
+            length: 256
+            options:
+                fixed: false
+            column: bi_alt
+        biTitle:
+            type: string
+            nullable: true
+            length: 256
+            options:
+                fixed: false
+            column: bi_title
+        biTyp:
+            type: boolean
+            nullable: false
+            column: bi_typ
+        biOid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: bi_oid
+    lifecycleCallbacks: {  }

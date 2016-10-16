@@ -1,0 +1,55 @@
+
+{% form_theme form _self %}
+
+{% use 'bootstrap_3_horizontal_layout.html.twig'%}
+
+{% block submit_widget %}
+
+    {% if name == "speichern" %}
+        {%- set type = type|default('submit') -%}
+        {%- set faicon = '<i class="fa fa-check-square"></i> ' -%}
+        {{ block('button_widget') }}
+    {% elseif name in "abort" %}
+
+        {%- set type = type|default('submit') -%}
+        {%- set faicon = '<i class="fa fa-times"></i> ' -%}
+        {{ block('button_widget') }}
+    {% elseif name == "sentMails" %}
+        <div class="input-group">
+            <div class="input-group-addon"></div>
+            <input type="text" name="{{ full_name|replace({'sentMail':'sentToMail'}) }}" class="{{ label_attr.class|default('form-control') }}" placeholder='max@mustermann.de' {% if value is not empty %} value="{{ value }}" {% endif %}/>
+			<span class="input-group-btn">
+				{%- set type = type|default('submit') -%}
+                {{ block('button_widget')}}
+			</span>
+        </div>
+    {% elseif name == "delete" %}
+        <div class="input-group">
+            <input type="text" name="{{ full_name|replace({"delete":"delete_text"}) }}" class="{{ label_attr.class|default('form-control') }}" placeholder='zum löschen "LÖSCHEN" eintippen' {% if value is not empty %} value="{{ value }}" {% endif %}/>
+			<span class="input-group-btn">
+				{%- set type = type|default('submit') -%}
+                {{ block('button_widget')}}
+			</span>
+        </div>
+    {% else %}
+        {%- set type = type|default('submit') -%}
+        {{ block('button_widget') }}
+    {% endif %}
+
+{% endblock %}
+
+{%- block button_widget -%}
+    {%- if label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+            '%name%': name,
+            '%id%': id,
+            }) %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ faicon|default()|raw }}{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</button>
+{%- endblock button_widget -%}
+
+

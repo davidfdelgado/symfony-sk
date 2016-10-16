@@ -1,0 +1,98 @@
+AppBundle\Entity\AgenturVertrieb:
+    type: entity
+    table: AGENTUR_Vertrieb
+    id:
+        avId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: av_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        avArt:
+            type: boolean
+            nullable: true
+            options:
+                comment: '1 agenturhotelbuero, 2 partner, 3 beides'
+                default: '1'
+            column: av_art
+        avStatus:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: av_status
+        avKid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: av_kid
+        avHotelname:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: av_hotelname
+        avAnsprechpartner:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: av_ansprechpartner
+        avEmail:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: av_email
+        avZahlungsziel:
+            type: boolean
+            nullable: false
+            options:
+                default: '14'
+            column: av_zahlungsziel
+        avCheckinEmail:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: av_checkin_email
+        avBuEmail:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: av_bu_email
+        avAflStatus:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: av_afl_status
+        avAflId:
+            type: string
+            nullable: false
+            length: 10
+            options:
+                fixed: false
+            column: av_afl_id
+        avCreated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: av_created
+        avStempel:
+            type: boolean
+            nullable: true
+            options:
+                default: '1'
+            column: av_stempel
+    lifecycleCallbacks: {  }

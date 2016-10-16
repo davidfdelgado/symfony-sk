@@ -1,0 +1,54 @@
+{% extends '@AppBundle/Scan/base-scan.html.twig' %}
+
+
+{% block page_content %}
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="fa fa-history"></i> Scan-Historie
+                    </h3>
+                </div>
+                <div class="box-body">
+                    <p>Hier finden Sie eine Historie Ihrer zuletzt getätigten Scans:</p>
+                    {% if historie|length > 0 %}
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Rechnungsnummer</th>
+                                    <th>Kategorie</th>
+                                    <th>Datum</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for scan in historie %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('sc_index', {'nr': scan.getScBNr().getBRnnr()}) }}">
+                                        {{ scan.scBNr.getBRnnr() }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ scan.scK.getAKName() }}
+                                    </td>
+                                    <td>
+                                        {% if scan.getScScanned()|date('Y-m-d') == date('now')|date('Y-m-d') %}
+                                            Heute um {{ scan.getScScanned()|date('H:i') }}
+                                        {% else %}
+                                            {{ scan.getScScanned()|date('d.m.Y H:i') }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <center><b>Es liegen keine Scans vor.</b></center>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

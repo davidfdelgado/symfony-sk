@@ -1,0 +1,85 @@
+AppBundle\Entity\ShopWarenkorb:
+    type: entity
+    table: SHOP_Warenkorb
+    indexes:
+        nr:
+            columns:
+                - nr
+        artikelnummer:
+            columns:
+                - artikelnummer
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        wcSId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: wc_s_id
+        nr:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+                default: ''
+        artikelnummer:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+        aid:
+            type: string
+            nullable: false
+            length: 16
+            options:
+                fixed: false
+        name:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+        nameEn:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+            column: name_en
+        menge:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        preis:
+            type: string
+            nullable: true
+            length: 10
+            options:
+                fixed: false
+        rabatt:
+            type: decimal
+            nullable: false
+            precision: 8
+            scale: 2
+            options:
+                default: '0.00'
+        datum:
+            type: datetime
+            nullable: true
+        updatetime:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+    lifecycleCallbacks: {  }

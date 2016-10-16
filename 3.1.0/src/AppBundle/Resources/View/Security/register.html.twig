@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Log in {% endblock %}</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('bundles/avanzuadmintheme/static/'~ app.environment ~'/styles/admin-lte-all.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/app/css/sk.css') }}" />
+    {% endblock %}
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+
+    <![endif]-->
+</head>
+<body class="hold-transition login-page">
+
+{% form_theme form '@AppBundle/form.html.twig'%}
+<div id="register-box">
+    <div class="login-logo">
+        <a href="https://www.sightseeing-kontor.de/" title="Sightseeing Kontor - Homepage"><img src="{{ asset('bundles/app/images/Sightseeing-Kontor-Zweizeiler.png') }}" style="max-width: 200px;;"></a>
+    </div>
+    <div class="login-box-body">
+        <p class="">Sie haben Ihr Passwort vergessen? Kein Problem. Setzen Sie Ihr Passwort zurück indem sie hier ihr Benutzernamen eintippen!<br>Anschließend senden wir Ihnen an ihre hinterlegte Email ihr neues Passwort.</p>
+        {% if error %}
+            <div class="alert alert-warning alert-dismissable auth-error">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <i class="icon fa fa-ban"></i> {{ error.messageKey }}
+            </div>
+        {% endif %}
+
+            </p>
+            {{ form_start(form) }}
+            {# Token CSRF #}
+            {{ form_widget(form._token) }}
+            <div class="footer">
+
+                {{ form_errors(form) }}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4><i class="fa fa-building-o"></i> Agentur-Information</h4>
+                        <hr>
+                        {{ form_row(form.avHotelname) }}
+                        {{ form_row(form.avAnsprechpartner) }}
+                        <br>
+                        <h4><i class="fa fa-user"></i> Login-BenutzerInformationen</h4>
+                        <hr>
+                        {{ form_row(form.avUsers.auVorname) }}
+                        {{ form_row(form.avUsers.auNachname) }}
+                        {{ form_row(form.avUsers.auEmail) }}
+                        <hr>
+                        {{ form_row(form.avUsers.auBn) }}
+                        {{ form_row(form.avUsers.auPw) }}
+                    </div>
+                    <div class="col-sm-6">
+                        <h4><i class="fa fa-phone"></i> Kontaktinformationen</h4>
+                        <hr>
+                        {{ form_row(form.avKid.kFirma) }}
+                        {{ form_row(form.avKid.kVorname) }}
+                        {{ form_row(form.avKid.kNachname) }}
+                        {{ form_row(form.avKid.kStrasse) }}
+                        <div class="row">
+                            <div class="col-sm-7">
+                            {{ form_row(form.avKid.kStadt) }}
+                            </div>
+                            <div class="col-sm-5">
+                                {{ form_row(form.avKid.kPlz) }}
+                            </div>
+
+                        </div>
+                        {{ form_row(form.avKid.kEmail) }}
+                        {{ form_row(form.avKid.kTelefonnummer) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr>
+
+                        {{ form_row(form.agb) }}
+                        {{ form_row(form.abbruch) }}
+                        {{ form_row(form.registrieren) }}
+                    </div>
+
+                </div>
+            </div>
+        {{ form_end(form, {'render_rest': false }) }}
+
+
+    </div>
+</div>
+
+
+<!-- jQuery 2.0.2 -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/bundles/avanzuadmintheme/vendor/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+
+</body>
+</html>

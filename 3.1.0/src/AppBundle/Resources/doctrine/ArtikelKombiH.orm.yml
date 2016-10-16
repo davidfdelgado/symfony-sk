@@ -1,0 +1,32 @@
+AppBundle\Entity\ArtikelKombiH:
+    type: entity
+    table: ARTIKEL_Kombi_h
+    uniqueConstraints:
+        akk_id:
+            columns:
+                - akk_id
+    id:
+        akkId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: akk_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        akkKid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                comment: 'gilt für die Kid'
+            column: akk_kid
+        akkRid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: akk_rid
+    lifecycleCallbacks: {  }

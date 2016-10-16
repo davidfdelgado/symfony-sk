@@ -1,0 +1,169 @@
+AppBundle\Entity\ShopBestellungen:
+    type: entity
+    table: SHOP_Bestellungen
+    indexes:
+        b_art:
+            columns:
+                - b_art
+        b_summe:
+            columns:
+                - b_summe
+        b_booked:
+            columns:
+                - b_booked
+    uniqueConstraints:
+        b_rnnr:
+            columns:
+                - b_rnnr
+    id:
+        nr:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        bKid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: b_kid
+        bBnr:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                comment: 'Referenz auf andere bnr'
+            column: b_bnr
+        bLang:
+            type: string
+            nullable: true
+            length: 8
+            options:
+                fixed: false
+                default: de-DE
+            column: b_lang
+        bFirma:
+            type: string
+            nullable: false
+            length: 3
+            options:
+                fixed: false
+            column: b_firma
+        bRnnr:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: b_rnnr
+        bRef:
+            type: string
+            nullable: true
+            length: 64
+            options:
+                fixed: false
+                comment: 'Referenz fuer Hotels'
+            column: b_ref
+        bArt:
+            type: boolean
+            nullable: true
+            options:
+                comment: 'Anfrage 1, Angebot 2, Rechnung 3, Abgeborchen >= 98'
+                default: '1'
+            column: b_art
+        bVid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                comment: 'Sagt ob es ein Vertriebsvorgang ist'
+                default: '0'
+            column: b_vid
+        bDatum:
+            type: date
+            nullable: false
+            column: b_datum
+        bSumme:
+            type: decimal
+            nullable: true
+            precision: 7
+            scale: 2
+            column: b_summe
+        bBezahlart:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                comment: '1 Vorkasse, 2 Paypal, 3 Sofort, 4 Hotel, 5 ELV, 6 Kredit'
+            column: b_bezahlart
+        bBezahlt:
+            type: boolean
+            nullable: true
+            options:
+                comment: '0= offen, 1 = bezahlt, 2 = Gutschrift'
+                default: '0'
+            column: b_bezahlt
+        bBhinweis:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: b_bhinweis
+        bEsent:
+            type: boolean
+            nullable: false
+            column: b_esent
+        bUser:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: b_user
+        bCreated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: b_created
+        bBooked:
+            type: datetime
+            nullable: false
+            options:
+                default: '0000-00-00 00:00:00'
+            column: b_booked
+        bPayed:
+            type: datetime
+            nullable: false
+            options:
+                default: '0000-00-00 00:00:00'
+            column: b_payed
+        bFrist:
+            type: datetime
+            nullable: false
+            options:
+                default: '0000-00-00 00:00:00'
+            column: b_frist
+        bFristStatus:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: b_frist_status
+        bOview:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: b_oview
+        bCalc:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: b_calc
+    lifecycleCallbacks: {  }

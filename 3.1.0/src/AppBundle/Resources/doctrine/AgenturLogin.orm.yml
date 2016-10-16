@@ -1,0 +1,64 @@
+AppBundle\Entity\AgenturLogin:
+    type: entity
+    table: AGENTUR_Login
+    indexes:
+        ag_id:
+            columns:
+                - ag_id
+    uniqueConstraints:
+        ag_session:
+            columns:
+                - ag_session
+    id:
+        agNr:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: ag_nr
+            generator:
+                strategy: IDENTITY
+    fields:
+        agSession:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: ag_session
+        agIp:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+            column: ag_ip
+        agExpire:
+            type: datetime
+            nullable: false
+            column: ag_expire
+        agCreated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: ag_created
+        agType:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: ag_type
+    manyToOne:
+        ag:
+            targetEntity: AgenturUser
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                ag_id:
+                    referencedColumnName: au_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,29 @@
+AppBundle\Entity\ShopBewertungslinks:
+    type: entity
+    table: SHOP_Bewertungslinks
+    indexes:
+        bwl_nr:
+            columns:
+                - bwl_nr
+    uniqueConstraints:
+        bwl_nr_2:
+            columns:
+                - bwl_nr
+    id: {  }
+    fields:
+        bwlStatus:
+            type: boolean
+            nullable: false
+            column: bwl_status
+    oneToOne:
+        bwlNr:
+            targetEntity: ShopBestellungen
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                bwl_nr:
+                    referencedColumnName: nr
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

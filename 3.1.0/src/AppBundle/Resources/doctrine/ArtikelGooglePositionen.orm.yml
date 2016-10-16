@@ -1,0 +1,61 @@
+AppBundle\Entity\ArtikelGooglePositionen:
+    type: entity
+    table: ARTIKEL_Google_Positionen
+    indexes:
+        gm_k_id:
+            columns:
+                - gm_k_id
+    uniqueConstraints:
+        gm_id:
+            columns:
+                - gm_id
+    id:
+        gmId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: gm_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        gmType:
+            type: boolean
+            nullable: false
+            column: gm_type
+        gmStatus:
+            type: boolean
+            nullable: false
+            column: gm_status
+        gmBeschreibung:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+            column: gm_beschreibung
+        gmLongitude:
+            type: decimal
+            nullable: false
+            precision: 18
+            scale: 12
+            column: gm_longitude
+        gmLatitude:
+            type: decimal
+            nullable: false
+            precision: 18
+            scale: 12
+            column: gm_latitude
+    manyToOne:
+        gmK:
+            targetEntity: ArtikelKategorie
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                gm_k_id:
+                    referencedColumnName: a_k_id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

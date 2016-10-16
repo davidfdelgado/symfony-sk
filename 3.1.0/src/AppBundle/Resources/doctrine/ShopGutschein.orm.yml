@@ -1,0 +1,60 @@
+AppBundle\Entity\ShopGutschein:
+    type: entity
+    table: SHOP_Gutschein
+    uniqueConstraints:
+        gu_nr:
+            columns:
+                - gu_nr
+    id:
+        guId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: gu_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        guNr:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+            column: gu_nr
+        guWert:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            column: gu_wert
+        guWertIst:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            options:
+                default: '0.00'
+            column: gu_wert_ist
+        guCreated:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: gu_created
+        guTyp:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: gu_typ
+        guSession:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+                comment: 'Verknüpft die Tabelle mit der SHOP_Warenkorbtabelle'
+            column: gu_session
+    lifecycleCallbacks: {  }

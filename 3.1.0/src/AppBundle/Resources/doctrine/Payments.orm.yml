@@ -1,0 +1,86 @@
+AppBundle\Entity\Payments:
+    type: entity
+    table: payments
+    indexes:
+        payment_status:
+            columns:
+                - payment_status
+        itemid:
+            columns:
+                - itemid
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        paytype:
+            type: boolean
+            nullable: false
+            options:
+                comment: '0 = Gutschrift, 1 Vorkasse; 2 Paypal; 3 Sofort; 4 hotel; 5 barclay; 6 barclay; 99 gutschein;'
+        rnfeallig:
+            type: date
+            nullable: false
+        txnid:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+        buyeremail:
+            type: string
+            nullable: true
+            length: 64
+            options:
+                fixed: false
+        paymentMethod:
+            type: string
+            nullable: true
+            length: 32
+            options:
+                fixed: false
+            column: payment_method
+        paymentAmount:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            options:
+                default: '0.00'
+            column: payment_amount
+        paymentFee:
+            type: decimal
+            nullable: false
+            precision: 7
+            scale: 2
+            options:
+                default: '0.00'
+            column: payment_fee
+        paymentStatus:
+            type: string
+            nullable: false
+            length: 25
+            options:
+                fixed: false
+            column: payment_status
+        itemid:
+            type: string
+            nullable: false
+            length: 25
+            options:
+                fixed: false
+        createdtime:
+            type: datetime
+            nullable: false
+        reason:
+            type: string
+            nullable: false
+            length: 128
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

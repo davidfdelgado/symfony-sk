@@ -1,0 +1,38 @@
+AppBundle\Entity\ShopZahlarten:
+    type: entity
+    table: SHOP_Zahlarten
+    id:
+        zahlartenid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        art:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+                default: ''
+        beschreibung:
+            type: text
+            nullable: true
+            length: 16777215
+            options:
+                fixed: false
+        artKosten:
+            type: string
+            nullable: false
+            length: 30
+            options:
+                fixed: false
+                default: ''
+            column: art_kosten
+        datum:
+            type: date
+            nullable: false
+    lifecycleCallbacks: {  }
